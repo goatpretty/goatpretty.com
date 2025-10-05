@@ -1,0 +1,25 @@
+---
+import config from '../../config';
+import Aboutpage from '../layout/aboutpage.astro';
+import Navigation from '../layout/navigation.astro';
+import '../styles/global.css';
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- ✅ 动态网站标题与描述 -->
+    <title>{config.site_title}</title>
+    <meta name="description" content={config.site_description} />
+  </head>
+
+  <body>
+    <Aboutpage>
+      <Navigation slot="header" />
+    </Aboutpage>
+  </body>
+</html>
