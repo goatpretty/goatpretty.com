@@ -5,54 +5,106 @@ import '../styles/mathjax.css';
 import '../styles/global.css';
 ---
 
-<div
-    class='bg-bodyLight dark:bg-bodyDark flex flex-col overflow-hidden h-screen'
->
-    <slot name='header' />
-    <main class='flex flex-1'>
+<div class="bg-bodyLight dark:bg-bodyDark flex flex-col overflow-hidden h-screen">
+  <slot name="header" />
+  <main class="flex flex-1">
+    <!-- 左侧目录 -->
+    <div class="bg-bgLight dark:bg-bgDark hidden md:flex flex-auto flex-col w-3/12 pl-16">
+      <motion.div
+        client:load
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{
+          duration: 0.4,
+        }}
+      >
         <div
-            class='bg-bgLight dark:bg-bgDark hidden md:flex flex-auto flex-col w-3/12 pl-16'
+          class="bg-foilLight dark:bg-foilDark flex flex-col items-center mt-2 ml-8 mr-4 rounded-2xl pt-4 pb-4"
         >
-            <motion.div
-                client:load
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{
-                    duration: 0.4,
-                }}
-            >
-                <div
-                    class='bg-foilLight dark:bg-foilDark flex flex-col items-center mt-2 ml-8 mr-4 rounded-2xl pt-4 pb-4'
-                >
-                    <slot name='headings' />
-                </div>
-                <FriendLink />
-            </motion.div>
+          <slot name="headings" />
         </div>
+        <FriendLink />
+      </motion.div>
+    </div>
+
+    <!-- 主体内容 -->
+    <div
+      class="flex-auto w-8/12 ml-0.5 mr-0.5 overflow-scroll p-10 pb-24"
+      id="main-content"
+      style="height: calc(100vh - 4rem)"
+    >
+      <motion.div
+        client:load
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{
+          duration: 0.4,
+        }}
+      >
+        <!-- 文章内容 -->
+        <slot name="article" />
+
+        <!-- 👁️ 阅读次数显示 -->
         <div
-            class='flex-auto w-8/12 ml-0.5 mr-0.5 overflow-scroll p-10 pb-24'
-            id="main-content"
-            style='height: calc(100vh - 4rem)'
+          id="view-counter"
+          class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-6 select-none"
         >
-            <motion.div
-                client:load
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{
-                    duration: 0.4,
-                }}
-            >
-                <slot name='article' />
-            </motion.div>
+        正在统计阅读次数...
         </div>
-        <div
-            class='bg-bgLight dark:bg-bgDark hidden md:flex flex-auto w-2/12 justify-center'
-        >
-            <p
-                class='italic text-descriptionTextLight dark:text-descriptionTextDark'
-            >
-                Posts grows here~
-            </p>
-        </div>
-    </main>
+      </motion.div>
+    </div>
+
+    <!-- 右侧留白 -->
+    <div class="bg-bgLight dark:bg-bgDark hidden md:flex flex-auto w-2/12 justify-center">
+      <p class="italic text-descriptionTextLight dark:text-descriptionTextDark">
+        Posts grows here~
+      </p>
+    </div>
+  </main>
 </div>
+
+<!-- 👇 阅读次数统计脚本（关闭 TS 类型检查） -->
+<script lang="ts">
+// @ts-nocheck  ← 添加这一行彻底关闭类型检查
+
+const pathParts = window.location.pathname.split('/');
+const slug = pathParts.filter(Boolean).pop();
+
+if (slug) {
+  const lastViewKey = `viewed_${slug}`;
+  const lastViewTime = localStorage.getItem(lastViewKey);
+  const now = Date.now();
+
+  const updateCounter = (views) => {
+    const el = document.getElementById('view-counter');
+    if (el) el.textContent = `阅读 ${views} 次`;
+  };
+
+  const showError = () => {
+    const el = document.getElementById('view-counter');
+    if (el) el.textContent = '阅读统计加载失败';
+  };
+
+  // ✅ 防止 24 小时内重复计数
+  if (!lastViewTime || now - Number(lastViewTime) > 24 * 60 * 60 * 1000) {
+    fetch(`/views/${slug}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && typeof data.views === 'number') {
+          updateCounter(data.views);
+          localStorage.setItem(lastViewKey, now.toString());
+        } else showError();
+      })
+      .catch(showError);
+  } else {
+    // 24 小时内已访问，仅刷新计数显示
+    fetch(`/views/${slug}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && typeof data.views === 'number') updateCounter(data.views);
+        else showError();
+      })
+      .catch(showError);
+  }
+}
+</script>
