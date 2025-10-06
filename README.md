@@ -51,8 +51,8 @@
 1. 克隆仓库
 
 ```bash
-git clone git@github.com:LuoYuXuanRyan/radish_garden.git
-cd radish_garden
+git clone git@github.com:goatpretty/goatpretty.com.git
+cd goatpretty.com
 ```
 
 2. 安装依赖
