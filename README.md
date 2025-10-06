@@ -1,13 +1,13 @@
 # GoatPretty Web ![GoatPretty Logo](/public/favicon.svg)
 
-**GoatPretty.com** 是一个由 **抽象的美羊羊（PrettyGoat）** 使用 [**Astro 框架**](https://github.com/goatpretty) 构建的个人博客网站，  
+**GoatPretty.com** 是一个由 **抽象的美羊羊（PrettyGoat）** 使用 [**Astro 框架**](https://astro.js.cn/) 构建的个人博客网站，  
 专注于分享排版设计、前端开发、以及灵感创作的内容。  
 
 ---
 
 ## 项目概述
 
-这是我的第一个正式博客项目，来源于 **Radish Garden** 主题。  
+这是我的第一个正式博客项目，来源于 [**Radish Garden**](https://github.com/LuoYuXuanRyan/radish_garden) 主题。  
 在此基础上进行了文案的重构，使其更契合与个人风格。  
 
 网站使用 **Astro + TailwindCSS** 搭建，结合 **React** 与 **Motion** 提供流畅的动画体验。  
