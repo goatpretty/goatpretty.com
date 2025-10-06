@@ -31,6 +31,8 @@ const { Content, headings } = await render(entry);
             <Prose slot='article'>
                 <Content />
             </Prose>
+
+            <!-- 📌 左侧目录（去掉编号，保留缩进） -->
             <div slot='headings' class='w-11/12 space-y-1'>
                 {
                     headings.map(
@@ -39,12 +41,10 @@ const { Content, headings } = await render(entry);
                                 depth: number;
                                 slug: string;
                                 text: string;
-                            },
-                            id: number
+                            }
                         ) => {
                             let space = ' '.repeat((heading.depth - 1) * 4);
-                            let text = `${id + 1}. ${heading.text}`;
-                            let full_text = `${space}${text}`;
+                            let full_text = `${space}${heading.text}`;
                             return (
                                 <a
                                     class='whitespace-pre
@@ -90,7 +90,8 @@ const { Content, headings } = await render(entry);
         });
     }
 
-    async function copyCode(block: HTMLElement, button: HTMLElement) {
+    // ✅ 加上类型，解决 TS 7006 报错
+    async function copyCode(block: HTMLElement, button: HTMLButtonElement) {
         let code = block.querySelector('code');
         let text = code?.innerText || '';
 
@@ -102,6 +103,7 @@ const { Content, headings } = await render(entry);
             button.innerText = copyButtonLabel;
         }, 1000);
     }
+
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll("a[href^='#']").forEach((anchor) => {
             anchor.addEventListener('click', function (event) {

@@ -8,13 +8,11 @@
     font-style: normal;
     font-display: fallback;
     font-weight: 400;
-    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-400-normal.woff2)
-            format('woff2'),
-        url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-400-normal.woff)
-            format('woff');
+    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-400-normal.woff2) format('woff2'),
+         url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-400-normal.woff) format('woff');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
-        U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+                   U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                   U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* david-libre-latin-500-normal */
@@ -23,13 +21,11 @@
     font-style: normal;
     font-display: fallback;
     font-weight: 500;
-    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-500-normal.woff2)
-            format('woff2'),
-        url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-500-normal.woff)
-            format('woff');
+    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-500-normal.woff2) format('woff2'),
+         url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-500-normal.woff) format('woff');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
-        U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+                   U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                   U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* david-libre-latin-700-normal */
@@ -38,13 +34,11 @@
     font-style: normal;
     font-display: fallback;
     font-weight: 700;
-    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-700-normal.woff2)
-            format('woff2'),
-        url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-700-normal.woff)
-            format('woff');
+    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-700-normal.woff2) format('woff2'),
+         url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-700-normal.woff) format('woff');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
-        U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+                   U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                   U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* david-libre-latin-ext-400-normal */
@@ -53,14 +47,12 @@
     font-style: normal;
     font-display: fallback;
     font-weight: 400;
-    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-400-normal.woff2)
-            format('woff2'),
-        url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-400-normal.woff)
-            format('woff');
+    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-400-normal.woff2) format('woff2'),
+         url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-400-normal.woff) format('woff');
     unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
-        U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
-        U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
-        U+A720-A7FF;
+                   U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+                   U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+                   U+A720-A7FF;
 }
 
 /* david-libre-latin-ext-500-normal */
@@ -69,14 +61,12 @@
     font-style: normal;
     font-display: fallback;
     font-weight: 500;
-    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-500-normal.woff2)
-            format('woff2'),
-        url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-500-normal.woff)
-            format('woff');
+    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-500-normal.woff2) format('woff2'),
+         url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-500-normal.woff) format('woff');
     unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
-        U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
-        U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
-        U+A720-A7FF;
+                   U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+                   U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+                   U+A720-A7FF;
 }
 
 /* david-libre-latin-ext-700-normal */
@@ -85,40 +75,51 @@
     font-style: normal;
     font-display: fallback;
     font-weight: 700;
-    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-700-normal.woff2)
-            format('woff2'),
-        url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-700-normal.woff)
-            format('woff');
+    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-700-normal.woff2) format('woff2'),
+         url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-700-normal.woff) format('woff');
     unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
-        U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
-        U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
-        U+A720-A7FF;
+                   U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+                   U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+                   U+A720-A7FF;
 }
 
+/* ========== 页面全局基础 ========== */
 body,
 html {
-    font-family: 'David Libre', 'LXGW WenKai', Georgia, 'Times New Roman', Times;
-    overflow: hidden;
+    font-family: 'David Libre', 'LXGW WenKai', Georgia, 'Times New Roman', Times, serif;
+    font-size: 17px;        /* 正文基准字号稍大 */
+    line-height: 1.9;       /* 舒适行距 */
+    color: #222;
+    background-color: #fff;
     height: 100%;
 }
 
+/* 代码块变量 */
 :root {
-    --code-bg-color-light: #eff1f2;
+    --code-bg-color-light: #f6f8fa;
     --code-bg-color-dark: #333333;
 }
 
+/* 内联代码 */
 code {
-    border: 1px solid;
+    border: 1px solid #ddd;
     border-radius: 0.2rem;
-    padding: 0rem 0.15rem;
+    padding: 0.15rem 0.35rem;
     background-color: var(--code-bg-color-light);
-    font-family: "Maple Mono NF CN" !important;
-    font-weight: 200 !important;
+    font-family: "Maple Mono NF CN", Consolas, monospace !important;
+    font-size: 0.95em;
+    font-weight: 400;
 }
 
+/* 暗色模式 */
 @media (prefers-color-scheme: dark) {
+    body {
+        color: #ddd;
+        background-color: #1e1e1e;
+    }
     code {
         background-color: var(--code-bg-color-dark);
+        border-color: #444;
     }
 }
 
@@ -128,21 +129,22 @@ code {
 
 /* =========================
    仅对“文章正文”启用首行缩进
-   在你的文章布局里给 Markdown 外层包一层：
-   <div class="post-content"><Content/></div>
    ========================= */
 .post-content {
-    line-height: 1.8;
-    /* 只影响正文，不动站点其他区域 */
+    line-height: 1.9;
+    font-size: 1.05rem;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
-/* 只缩进“直接子级”的普通段落 */
+/* 普通段落首行缩进 */
 .post-content > p:not(.no-indent) {
-    text-indent: 2em;      /* 两个汉字 */
-    margin: 0 0 1em 0;
+    text-indent: 2em;      
+    margin: 0 0 1.2em 0;   /* 段落之间留白 */
 }
 
-/* 标题/列表/代码/引用/表格等一律不缩进 */
+/* 标题/列表/代码/引用/表格等不缩进 */
 .post-content :is(h1,h2,h3,h4,h5,h6,
                   ul,ol,li,
                   pre,code,blockquote,
@@ -151,15 +153,35 @@ code {
     text-indent: 0;
 }
 
-/* 列表项和引用内部的段落不缩进（双保险） */
+/* 列表项和引用里的段落不缩进 */
 .post-content li p,
 .post-content blockquote p {
     text-indent: 0;
 }
 
-/* 只有一张图片的段落不缩进（常见的 Markdown：<p><img/></p>） */
+/* 只有图片的段落不缩进 */
 .post-content p:has(> img:only-child) {
     text-indent: 0;
 }
 
-/* 如需临时关闭某段缩进，可在该 <p> 上加 .no-indent 类 */
+/* ========== 图片样式 ========== */
+.post-content img {
+    display: block;
+    margin: 1.5em auto;
+    max-width: 100%;
+    border-radius: 0.6rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* 带说明文字的图片（<figure><img/><figcaption>） */
+.post-content figure {
+    text-align: center;
+    margin: 1.5em auto;
+}
+.post-content figcaption {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.5em;
+}
+
+/* 临时关闭缩进：<p class="no-indent"> */
