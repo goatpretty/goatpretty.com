@@ -1,0 +1,24 @@
+---
+import moreLinks from '../data/moreLinks.ts';
+
+interface MoreLink {
+  name: string;
+  url: string;
+}
+
+const links: MoreLink[] = moreLinks;
+---
+
+<div
+  class="absolute top-full left-0 mt-2 w-40 bg-foilLight dark:bg-bgDark border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity duration-200 z-50"
+>
+  <ul class="flex flex-col">
+    {links.map((link) => (
+      <li class="p-2 hover:bg-bgLight dark:hover:bg-foilDark rounded-md transition">
+        <a href={link.url} target="_blank" rel="noopener noreferrer">
+          {link.name}
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
