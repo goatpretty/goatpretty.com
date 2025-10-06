@@ -1,13 +1,13 @@
 # GoatPretty Web ![GoatPretty Logo](/public/favicon.svg)
 
-**GoatPretty.com** 是一个由 **抽象的美羊羊（PrettyGoat）** 使用 **Astro 框架** 构建的个人博客网站，  
+**GoatPretty.com** 是一个由 **抽象的美羊羊（PrettyGoat）** 使用 [**Astro 框架**](https://github.com/goatpretty) 构建的个人博客网站，  
 专注于分享排版设计、前端开发、以及灵感创作的内容。  
 
 ---
 
 ## 项目概述
 
-这是我的第一个正式博客项目，灵感来源于 **Radish Garden** 主题。  
+这是我的第一个正式博客项目，来源于 **Radish Garden** 主题。  
 在此基础上进行了文案的重构，使其更契合与个人风格。  
 
 网站使用 **Astro + TailwindCSS** 搭建，结合 **React** 与 **Motion** 提供流畅的动画体验。  
@@ -39,36 +39,49 @@
 | [Motion](https://motion.dev/) | 动画与过渡效果 |
 | [Cloudflare Pages](https://pages.cloudflare.com/) | 部署与托管平台 |
 
----
-
 ## 安装与运行
 
 ### 前提条件
 
-- Node.js（建议 v18 以上）
-- npm 或 pnpm
+- Node.js
+- pnpm
 
 ### 安装步骤
 
+1. 克隆仓库
+
 ```bash
-# 克隆仓库
-git clone https://github.com/goatpretty/goatpretty.com.git
-cd goatpretty.com
+git clone git@github.com:LuoYuXuanRyan/radish_garden.git
+cd radish_garden
+```
 
-# 安装依赖
-npm install
+2. 安装依赖
 
-# 本地开发
-npm run dev
+```bash
+pnpm install
+```
 
-# 构建项目
-npm run build
+3. 开发模式运行
 
-# 预览构建结果
-npm run preview
+```bash
+pnpm run dev
+```
 
+4. 构建项目
+
+```bash
+pnpm run build
+```
+
+5. 预览构建结果
+
+```bash
+pnpm run preview
+```
 
 ## 项目结构
+
+```
 /
 ├── public/            # 静态资源目录
 ├── src/
@@ -80,8 +93,13 @@ npm run preview
 ├── config.ts          # 网站配置文件
 ├── astro.config.mjs   # Astro配置
 └── tailwind.config.mjs # TailwindCSS配置
-## 内容管理 博客文章存储在src/data/posts/目录下，使用Markdown格式编写。每篇文章需要包含以下前置元数据：
-markdown
+```
+
+## 内容管理
+
+博客文章存储在`src/data/posts/`目录下，使用Markdown格式编写。每篇文章需要包含以下前置元数据：
+
+```markdown
 ---
 title: '文章标题'
 publishDate: 'YYYY-MM-DD'
@@ -93,12 +111,24 @@ slug: '文章slug'
 ---
 
 文章内容...
+```
 
-## 自定义配置 
- 站的基本配置可以在config.ts文件中修改，包括网站标题、描述、作者信息、社交媒体链接等。 
- 
-## 部署 该项目已配置为可部署到Cloudflare Pages，当前部署地址为：
-[https://luoyuxuanryan.pages.dev]
-(https://luoyuxuanryan.pages.dev) 
- 
- ## 许可证 [MIT](LICENSE)
+## 自定义配置
+
+网站的基本配置可以在`config.ts`文件中修改，包括网站标题、描述、作者信息、社交媒体链接等。
+
+## 部署
+
+该项目已配置为可部署到Cloudflare Pages，当前部署地址为：[https://goatpretty.com](https://goatpretty.com)
+
+## 许可证
+
+[MIT](LICENSE)
+
+## 联系方式
+
+如有任何问题或建议，请通过以下方式联系：
+
+- Email: goatpretty@foxmail.com
+- GitHub: [GoatPretty](https://github.com/goatpretty)
+```
