@@ -32,5 +32,76 @@ import '../styles/global.css'
                 <a href='/about'>About</a>
             </li>
         </ul>
+            <!-- 🌞 / 🌙 模式切换按钮 -->
+    <button
+        id="theme-toggle"
+        class="p-2 ml-3 rounded-md transition-all
+               bg-foilLight dark:bg-bgDark
+               text-fontLight dark:text-fontDark
+               hover:scale-110"
+        aria-label="切换主题"
+        onClick="toggleTheme()"
+    >
+        🌞
+    </button>
+
+    <script>
+        // 读取主题状态
+        const root = document.documentElement;
+        const storedTheme = localStorage.getItem('theme');
+
+        if (storedTheme === 'dark') {
+            root.classList.add('dark');
+        }
+
+        function toggleTheme() {
+            root.classList.toggle('dark');
+            const isDark = root.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            document.getElementById('theme-toggle').textContent = isDark ? '🌙' : '🌞';
+        }
+
+        // 初始化图标
+        window.addEventListener('DOMContentLoaded', () => {
+            const isDark = root.classList.contains('dark');
+            document.getElementById('theme-toggle').textContent = isDark ? '🌙' : '🌞';
+        });
+    </script>
+        <!-- 🌞 / 🌙 模式切换按钮 -->
+    <button
+        id="theme-toggle"
+        class="p-2 ml-3 rounded-md transition-all
+               bg-foilLight dark:bg-bgDark
+               text-fontLight dark:text-fontDark
+               hover:scale-110"
+        aria-label="切换主题"
+        onClick="toggleTheme()"
+    >
+        🌞
+    </button>
+
+    <script>
+        // 读取主题状态
+        const root = document.documentElement;
+        const storedTheme = localStorage.getItem('theme');
+
+        if (storedTheme === 'dark') {
+            root.classList.add('dark');
+        }
+
+        function toggleTheme() {
+            root.classList.toggle('dark');
+            const isDark = root.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            document.getElementById('theme-toggle').textContent = isDark ? '🌙' : '🌞';
+        }
+
+        // 初始化图标
+        window.addEventListener('DOMContentLoaded', () => {
+            const isDark = root.classList.contains('dark');
+            document.getElementById('theme-toggle').textContent = isDark ? '🌙' : '🌞';
+        });
+    </script>
+
     </nav>
 </header>
