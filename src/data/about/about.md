@@ -38,4 +38,4 @@ Then I started learning **Founder Typesetting (方正书版)** and **Founder Fei
 
 This blog is hosted on **Cloudflare Pages**, which runs smoothly and provides great performance. Next, I plan to continue improving the site’s features and post more tutorials about design and typography. I hope this small space can become a place for sharing ideas and inspiration.
 
-I’m **PrettyGoat**, wishing you good luck — and may you find your own spark of creativity in this world. 🌸
+I’m **PrettyGoat**, wishing you good luck — and may you find your own spark of creativity in this world. 
