@@ -22,6 +22,9 @@ posts.map((post: any) => {
 const totalTags = tags.size;
 ---
 
+<!-- ✅ 提前预加载微信收款码图片 -->
+<link rel="preload" as="image" href={config.wechat_qr}>
+
 <body class="bg-bodyLight dark:bg-bodyDark flex flex-col h-screen overflow-hidden">
   <slot name="header" />
   <main class="flex flex-1 flex-col md:flex-row overflow-y-scroll" id="main-content-main">
@@ -35,10 +38,7 @@ const totalTags = tags.size;
         <!-- foil -->
         <div
           class="bg-foilLight dark:bg-foilDark flex flex-col items-center
-                      mt-2 md:ml-8 md:mr-4
-                      ml-4 mr-4
-                      pt-2
-                      rounded-2xl"
+                 mt-2 md:ml-8 md:mr-4 ml-4 mr-4 pt-2 rounded-2xl"
         >
           <!-- avatar -->
           <Avatar src={config.avatar} alt="avatar" />
@@ -49,9 +49,8 @@ const totalTags = tags.size;
             ---- {config.author_description}
           </p>
 
-          <div
-            class="flex flex-row w-full justify-around mt-4 mb-4 text-2xl text-profileTextLight dark:text-profileTextDark"
-          >
+          <!-- 帖子统计 -->
+          <div class="flex flex-row w-full justify-around mt-4 mb-4 text-2xl text-profileTextLight dark:text-profileTextDark">
             <div class="flex flex-col items-center">
               <div><Post class="w-9 h-9" /></div>
               <p class="text-3xl">{totalPosts}</p>
@@ -62,36 +61,33 @@ const totalTags = tags.size;
             </div>
           </div>
 
-          <!-- 🧩 原 GitHub + E-mail -->
-          <div
-            class="flex flex-row w-full mb-2 justify-around text-bg text-profileTextLight dark:text-profileTextDark"
-          >
+          <!-- 🧩 GitHub + E-mail -->
+          <div class="flex flex-row w-full mb-2 justify-around text-bg text-profileTextLight dark:text-profileTextDark">
             <a
               href={config.github}
+              target="_blank"
               class="inline-flex w-2/5 justify-center items-center hover:bg-bgLight dark:hover:bg-bgDark rounded-md"
             >
-              <Github class="h-5 w-5 mr-1" />
+              <Github class="h-6 w-6 mr-1" />
               GitHub
             </a>
             <a
               href={`mailto:${config.email}?subject=${config.email_subject}`}
               class="inline-flex w-2/5 justify-center items-center hover:bg-bgLight dark:hover:bg-bgDark rounded-md"
             >
-              <Mail class="h-5 w-5 mr-1" />
+              <Mail class="h-6 w-6 mr-1" />
               E-Mail
             </a>
           </div>
 
           <!-- 🆕 Douyin + Bilibili -->
-          <div
-            class="flex flex-row w-full mb-4 justify-around text-bg text-profileTextLight dark:text-profileTextDark"
-          >
+          <div class="flex flex-row w-full mb-4 justify-around text-bg text-profileTextLight dark:text-profileTextDark">
             <a
               href={config.douyin}
               target="_blank"
               class="inline-flex w-2/5 justify-center items-center hover:bg-bgLight dark:hover:bg-bgDark rounded-md"
             >
-              <img src="/douyin.svg" alt="Douyin" class="h-5 w-5 mr-1" />
+              <img src="/douyin.svg" alt="Douyin" class="w-7 h-7 mr-1" />
               Douyin
             </a>
             <a
@@ -99,27 +95,21 @@ const totalTags = tags.size;
               target="_blank"
               class="inline-flex w-2/5 justify-center items-center hover:bg-bgLight dark:hover:bg-bgDark rounded-md"
             >
-              <img src="/bilibili.svg" alt="Bilibili" class="h-5 w-5 mr-1" />
+              <img src="/bilibili.svg" alt="Bilibili" class="w-7 h-7 mr-1" />
               Bilibili
             </a>
           </div>
 
-          <!-- 💬 WeChat hover 显示二维码 -->
-          <div class="relative flex justify-center mb-4 w-full">
+          <!-- 💬 WeChat 点击弹出二维码 -->
+          <div class="relative flex justify-center mb-6 w-full">
             <div
               id="wechat-container"
-              class="inline-flex justify-center items-center cursor-pointer text-bg text-profileTextLight dark:text-profileTextDark hover:text-phOrange"
+              class="inline-flex justify-center items-center cursor-pointer
+                     text-bg text-profileTextLight dark:text-profileTextDark
+                     hover:text-phOrange select-none"
             >
-              <img src="/wechat.svg" alt="WeChat" class="h-6 w-6 mr-1" />
+              <img src="/wechat.svg" alt="WeChat" class="w-7 h-7 mr-1" />
               WeChat
-            </div>
-
-            <!-- 隐藏的悬浮二维码 -->
-            <div
-              id="wechat-popup"
-              class="hidden absolute top-full mt-2 bg-white dark:bg-bgDark p-2 rounded-xl shadow-lg border dark:border-gray-700"
-            >
-              <img src={config.wechat_qr} alt="WeChat QR" class="w-40 h-40 rounded-md" />
             </div>
           </div>
         </div>
@@ -128,12 +118,7 @@ const totalTags = tags.size;
       </motion.div>
     </div>
 
-    <div
-      class="flex-auto md:w-8/12
-                md:ml-0.5 md:mr-0.5
-                ml-2 mr-2 md:overflow-y-scroll"
-      id="main-content-div"
-    >
+    <div class="flex-auto md:w-8/12 md:ml-0.5 md:mr-0.5 ml-2 mr-2 md:overflow-y-scroll" id="main-content-div">
       <slot name="main" />
     </div>
 
@@ -147,13 +132,30 @@ const totalTags = tags.size;
 
     <GoBackToTop />
   </main>
+
+  <!-- 💬 WeChat 模态弹窗 -->
+  <div
+    id="wechat-modal"
+    class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm hidden items-center justify-center z-50 transition-opacity duration-200 opacity-0"
+  >
+    <div
+      id="wechat-popup"
+      class="bg-white dark:bg-bgDark p-5 rounded-2xl shadow-2xl transform scale-95 transition-all duration-200 max-w-xs flex flex-col items-center"
+    >
+      <img
+        src={config.wechat_qr}
+        alt="WeChat QR"
+        class="max-w-[320px] w-full h-auto object-contain rounded-xl select-none"
+      />
+      <p class="text-center text-sm text-fontLight dark:text-fontDark mt-3">扫码添加 / 支持作者</p>
+    </div>
+  </div>
 </body>
 
 <script>
   const setMainContentId = () => {
     const mainElement = document.getElementById('main-content-main');
     const specificDivElement = document.getElementById('main-content-div');
-
     if (window.innerWidth >= 768) {
       specificDivElement?.setAttribute('id', 'main-content');
       mainElement?.removeAttribute('id');
@@ -165,11 +167,42 @@ const totalTags = tags.size;
   window.onload = setMainContentId;
   window.addEventListener('resize', setMainContentId);
 
-  // 👇 Hover 显示微信二维码
-  const wechatContainer = document.getElementById('wechat-container');
+  // 💬 WeChat 弹窗逻辑
+  const wechatBtn = document.getElementById('wechat-container');
+  const modal = document.getElementById('wechat-modal');
   const popup = document.getElementById('wechat-popup');
-  if (wechatContainer && popup) {
-    wechatContainer.addEventListener('mouseenter', () => popup.classList.remove('hidden'));
-    wechatContainer.addEventListener('mouseleave', () => popup.classList.add('hidden'));
+
+  if (wechatBtn && modal && popup) {
+    wechatBtn.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        modal.classList.add('flex');
+        modal.style.opacity = '1';
+        popup.style.transform = 'scale(1)';
+      });
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.opacity = '0';
+        popup.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }, 200);
+      }
+    });
+
+    // 支持 ESC 键关闭
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        modal.style.opacity = '0';
+        popup.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }, 200);
+      }
+    });
   }
 </script>
