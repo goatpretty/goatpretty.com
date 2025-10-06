@@ -29,6 +29,7 @@ const config: Config = {
   friendlink: {
     "Radish Garden": 'https://luoyuxuanryan.pages.dev/',
     "Cralemonの柠檬小径": 'https://www.cralemon.com/',
+    "飞天主站——你的心灵之窗": 'http://faitin-home.wikidot.com',
     "GoatPrettty·Home": 'https://goatpretty.com',
   },
 };
