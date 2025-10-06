@@ -128,7 +128,7 @@ code {
 }
 
 /* =========================
-   仅对“文章正文”启用首行缩进
+   正文样式
    ========================= */
 .post-content {
     line-height: 1.9;
@@ -138,30 +138,28 @@ code {
     padding: 0 1rem;
 }
 
-/* 普通段落首行缩进 */
+/* ✅ 普通段落首行缩进 */
 .post-content > p:not(.no-indent) {
     text-indent: 2em;      
-    margin: 0 0 1.2em 0;   /* 段落之间留白 */
+    margin: 0 0 1.2em 0;
 }
 
-/* 标题/列表/代码/引用/表格等不缩进 */
-.post-content :is(h1,h2,h3,h4,h5,h6,
-                  ul,ol,li,
-                  pre,code,blockquote,
-                  table,thead,tbody,tfoot,tr,th,td,
-                  figcaption) {
-    text-indent: 0;
-}
-
-/* 列表项和引用里的段落不缩进 */
-.post-content li p,
-.post-content blockquote p {
-    text-indent: 0;
-}
-
-/* 只有图片的段落不缩进 */
-.post-content p:has(> img:only-child) {
-    text-indent: 0;
+/* 🚫 标题/列表/代码/引用/表格/图片 不缩进 */
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6,
+.post-content ul,
+.post-content ol,
+.post-content li,
+.post-content pre,
+.post-content code,
+.post-content blockquote,
+.post-content table,
+.post-content p:has(img) {
+    text-indent: 0 !important;
 }
 
 /* ========== 图片样式 ========== */
@@ -173,7 +171,7 @@ code {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-/* 带说明文字的图片（<figure><img/><figcaption>） */
+/* 图片说明文字 */
 .post-content figure {
     text-align: center;
     margin: 1.5em auto;

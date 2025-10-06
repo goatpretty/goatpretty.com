@@ -22,13 +22,14 @@ posts.map((post: any) => {
 const totalTags = tags.size;
 ---
 
-<!-- ✅ 提前预加载微信收款码图片 -->
+<!-- ✅ 预加载微信收款码，页面渲染前加载 -->
 <link rel="preload" as="image" href={config.wechat_qr}>
 
-<body class="bg-bodyLight dark:bg-bodyDark flex flex-col h-screen overflow-hidden">
+<body class="bg-bodyLight dark:bg-bodyDark flex flex-col h-screen overflow-hidden opacity-0 transition-opacity duration-300" id="page-root">
   <slot name="header" />
   <main class="flex flex-1 flex-col md:flex-row overflow-y-scroll" id="main-content-main">
-    <div class="md:bg-bgLight md:dark:bg-bgDark flex flex-auto flex-col md:w-3/12 md:pl-16">
+    <!-- ✅ 左栏缩小 -->
+    <div class="md:bg-bgLight md:dark:bg-bgDark flex flex-auto flex-col md:w-3/12 md:pl-6">
       <motion.div
         client:load
         initial={{ opacity: 0, x: -50 }}
@@ -38,7 +39,7 @@ const totalTags = tags.size;
         <!-- foil -->
         <div
           class="bg-foilLight dark:bg-foilDark flex flex-col items-center
-                 mt-2 md:ml-8 md:mr-4 ml-4 mr-4 pt-2 rounded-2xl"
+                 mt-2 md:ml-2 md:mr-3 ml-3 mr-3 pt-2 rounded-2xl"
         >
           <!-- avatar -->
           <Avatar src={config.avatar} alt="avatar" />
@@ -87,7 +88,7 @@ const totalTags = tags.size;
               target="_blank"
               class="inline-flex w-2/5 justify-center items-center hover:bg-bgLight dark:hover:bg-bgDark rounded-md"
             >
-              <img src="/douyin.svg" alt="Douyin" class="w-12 h-12 mr-1" />
+              <img src="/douyin.svg" alt="Douyin" class="w-10 h-10 mr-1" />
               Douyin
             </a>
             <a
@@ -95,12 +96,12 @@ const totalTags = tags.size;
               target="_blank"
               class="inline-flex w-2/5 justify-center items-center hover:bg-bgLight dark:hover:bg-bgDark rounded-md"
             >
-              <img src="/bilibili.svg" alt="Bilibili" class="w-12 h-12 mr-1" />
+              <img src="/bilibili.svg" alt="Bilibili" class="w-10 h-10 mr-1" />
               Bilibili
             </a>
           </div>
 
-          <!-- 💬 WeChat 点击弹出二维码 -->
+          <!-- 💬 WeChat 弹出二维码 -->
           <div class="relative flex justify-center mb-6 w-full">
             <div
               id="wechat-container"
@@ -118,10 +119,12 @@ const totalTags = tags.size;
       </motion.div>
     </div>
 
+    <!-- ✅ 右侧主要内容区 -->
     <div class="flex-auto md:w-8/12 md:ml-0.5 md:mr-0.5 ml-2 mr-2 md:overflow-y-scroll" id="main-content-div">
       <slot name="main" />
     </div>
 
+    <!-- ✅ 右侧提示栏 -->
     <div class="bg-bgLight dark:bg-bgDark flex-auto w-2/12 hidden md:block">
       <div class="flex justify-center">
         <p class="italic text-descriptionTextLight dark:text-descriptionTextDark">
@@ -133,7 +136,7 @@ const totalTags = tags.size;
     <GoBackToTop />
   </main>
 
-  <!-- 💬 WeChat 模态弹窗 -->
+  <!-- 💬 WeChat 模态弹窗（淡入淡出 + 居中） -->
   <div
     id="wechat-modal"
     class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm hidden items-center justify-center z-50 transition-opacity duration-200 opacity-0"
@@ -145,7 +148,7 @@ const totalTags = tags.size;
       <img
         src={config.wechat_qr}
         alt="WeChat QR"
-        class="max-w-[320px] w-full h-auto object-contain rounded-xl select-none"
+        class="max-w-[340px] w-full h-auto object-contain rounded-xl select-none"
       />
       <p class="text-center text-sm text-fontLight dark:text-fontDark mt-3">扫码添加 / 支持作者</p>
     </div>
@@ -153,54 +156,59 @@ const totalTags = tags.size;
 </body>
 
 <script>
+  // ✅ 页面加载完才显示（避免闪白）
+  window.addEventListener("load", () => {
+    document.getElementById("page-root")?.classList.remove("opacity-0");
+  });
+
+  // ✅ 自适应主内容区逻辑
   const setMainContentId = () => {
-    const mainElement = document.getElementById('main-content-main');
-    const specificDivElement = document.getElementById('main-content-div');
+    const mainElement = document.getElementById("main-content-main");
+    const specificDivElement = document.getElementById("main-content-div");
     if (window.innerWidth >= 768) {
-      specificDivElement?.setAttribute('id', 'main-content');
-      mainElement?.removeAttribute('id');
+      specificDivElement?.setAttribute("id", "main-content");
+      mainElement?.removeAttribute("id");
     } else {
-      mainElement?.setAttribute('id', 'main-content');
-      specificDivElement?.removeAttribute('id');
+      mainElement?.setAttribute("id", "main-content");
+      specificDivElement?.removeAttribute("id");
     }
   };
   window.onload = setMainContentId;
-  window.addEventListener('resize', setMainContentId);
+  window.addEventListener("resize", setMainContentId);
 
-  // 💬 WeChat 弹窗逻辑
-  const wechatBtn = document.getElementById('wechat-container');
-  const modal = document.getElementById('wechat-modal');
-  const popup = document.getElementById('wechat-popup');
+  // ✅ WeChat 弹窗逻辑（带淡入淡出动画）
+  const wechatBtn = document.getElementById("wechat-container");
+  const modal = document.getElementById("wechat-modal");
+  const popup = document.getElementById("wechat-popup");
 
   if (wechatBtn && modal && popup) {
-    wechatBtn.addEventListener('click', () => {
-      modal.classList.remove('hidden');
+    wechatBtn.addEventListener("click", () => {
+      modal.classList.remove("hidden");
       requestAnimationFrame(() => {
-        modal.classList.add('flex');
-        modal.style.opacity = '1';
-        popup.style.transform = 'scale(1)';
+        modal.classList.add("flex");
+        modal.style.opacity = "1";
+        popup.style.transform = "scale(1)";
       });
     });
 
-    modal.addEventListener('click', (e) => {
+    modal.addEventListener("click", (e) => {
       if (e.target === modal) {
-        modal.style.opacity = '0';
-        popup.style.transform = 'scale(0.95)';
+        modal.style.opacity = "0";
+        popup.style.transform = "scale(0.95)";
         setTimeout(() => {
-          modal.classList.add('hidden');
-          modal.classList.remove('flex');
+          modal.classList.add("hidden");
+          modal.classList.remove("flex");
         }, 200);
       }
     });
 
-    // 支持 ESC 键关闭
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-        modal.style.opacity = '0';
-        popup.style.transform = 'scale(0.95)';
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+        modal.style.opacity = "0";
+        popup.style.transform = "scale(0.95)";
         setTimeout(() => {
-          modal.classList.add('hidden');
-          modal.classList.remove('flex');
+          modal.classList.add("hidden");
+          modal.classList.remove("flex");
         }, 200);
       }
     });
