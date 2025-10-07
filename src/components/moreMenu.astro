@@ -1,164 +1,79 @@
 ---
-/** ---------- Props & Setup (TypeScript 只放在前置区即可) ---------- */
-interface LinkItem { name: string; url: string; }
-interface Props { links: LinkItem[] }
+interface LinkItem {
+  name: string;
+  url: string;
+}
+
+interface Props {
+  links: LinkItem[];
+}
+
 const { links } = Astro.props as Props;
-
-/** 默认要在移动端追加到 More 的导航项（桌面端不显示） */
-const defaults: LinkItem[] = [
-  { name: 'Blogs', url: '/' },
-  { name: 'About', url: '/about' },
-];
-
-/** 过滤掉与外部传入的 links 重复的默认项（按 url 或 name 去重） */
-const mobileOnlyDefaults = defaults.filter(d =>
-  !links.some(l => l.url === d.url || l.name === d.name)
-);
-
-/** 为本组件生成唯一 id，避免被多次引用时冲突 */
-const uid = Math.random().toString(36).slice(2, 8);
-const ROOT_ID = `more-root-${uid}`;
-const BTN_ID  = `more-toggle-${uid}`;
-const POP_ID  = `more-dropdown-${uid}`;
 ---
 
-<!-- ✅ 通用 More 菜单（桌面 + 移动） -->
-<div id={ROOT_ID} class="relative select-none">
-  <!-- 触发按钮：桌面端显示 “More ▾”，移动端显示汉堡图标 -->
+<div class="relative select-none">
+  <!-- 按钮 -->
   <button
-    id={BTN_ID}
-    type="button"
-    class="inline-flex items-center justify-center cursor-pointer select-none
-           text-fontLight dark:text-fontDark hover:text-phOrange transition
-           px-2 py-1"
-    aria-label="Toggle menu"
-    aria-expanded="false"
-    aria-haspopup="true"
+    id="more-toggle"
+    class="inline-flex flex-initial p-2 cursor-pointer
+           text-fontLight dark:text-fontDark hover:text-phOrange transition"
   >
-    <span class="hidden md:inline">More ▾</span>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-6 w-6 md:hidden"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      aria-hidden="true"
-    >
-      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-    </svg>
+    More ▾
   </button>
 
-  <!-- 下拉菜单（右对齐，带动画 & 高层级） -->
+  <!-- ✅ 下拉菜单（带淡入淡出动画 + 右对齐） -->
   <div
-    id={POP_ID}
-    class="absolute right-0 top-full mt-2 w-56
-           bg-bgLight dark:bg-bgDark border border-gray-300 dark:border-gray-700
-           rounded-xl shadow-xl overflow-hidden
-           opacity-0 invisible scale-95 transform-gpu
-           transition-all duration-200 ease-out
-           z-[9999]"
-    role="menu"
-    aria-hidden="true"
+    id="more-dropdown"
+    class="invisible opacity-0 absolute right-0 top-full mt-2 mr-2 w-48
+           bg-bgLight dark:bg-bgDark
+           border border-gray-300 dark:border-gray-700
+           rounded-lg shadow-lg overflow-hidden z-50
+           transform scale-95 transition-all duration-300 ease-out"
   >
-    <!-- 移动端专属：自动追加 Blogs / About（桌面端隐藏） -->
-    {
-      mobileOnlyDefaults.map((link: { name: string; url: string }) => (
-        <a
-          href={link.url}
-          role="menuitem"
-          target={link.url.startsWith('http') ? '_blank' : '_self'}
-          rel="noopener noreferrer"
-          class="md:hidden block px-4 py-2 text-center
-                 text-fontLight dark:text-fontDark
-                 hover:bg-phOrange hover:text-white
-                 transition-colors"
-        >
-          {link.name}
-        </a>
-      ))
-    }
-
-    <!-- 你的自定义 moreLinks（桌面/移动端都显示） -->
-    {
-      links.map((link: { name: string; url: string }) => (
-        <a
-          href={link.url}
-          role="menuitem"
-          target={link.url.startsWith('http') ? '_blank' : '_self'}
-          rel="noopener noreferrer"
-          class="block px-4 py-2 text-center
-                 text-fontLight dark:text-fontDark
-                 hover:bg-phOrange hover:text-white
-                 transition-colors"
-        >
-          {link.name}
-        </a>
-      ))
-    }
+    {links.map((link) => (
+      <a
+        href={link.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block px-4 py-2 text-fontLight dark:text-fontDark
+               hover:bg-phOrange hover:text-white transition-colors"
+      >
+        {link.name}
+      </a>
+    ))}
   </div>
 
-  <!-- 交互逻辑（只写纯 JS，避免 TS 报错） -->
-  <script is:inline>
-    (function () {
-      var root = document.getElementById('%ROOT_ID%');
-      var btn  = document.getElementById('%BTN_ID%');
-      var pop  = document.getElementById('%POP_ID%');
-      if (!root || !btn || !pop) return;
+  <script>
+    const toggleBtn = document.getElementById('more-toggle') as HTMLButtonElement | null;
+    const dropdown = document.getElementById('more-dropdown') as HTMLDivElement | null;
 
-      var open = false;
+    if (toggleBtn && dropdown) {
+      const openMenu = () => {
+        dropdown.classList.remove('invisible', 'opacity-0', 'scale-95');
+        dropdown.classList.add('visible', 'opacity-100', 'scale-100');
+      };
 
-      function openMenu() {
-        pop.classList.remove('invisible', 'opacity-0', 'scale-95');
-        pop.classList.add('visible', 'opacity-100', 'scale-100');
-        pop.setAttribute('aria-hidden', 'false');
-        btn.setAttribute('aria-expanded', 'true');
-        open = true;
-      }
+      const closeMenu = () => {
+        dropdown.classList.add('opacity-0', 'scale-95');
+        dropdown.classList.remove('opacity-100', 'scale-100');
+        setTimeout(() => dropdown.classList.add('invisible'), 200);
+      };
 
-      function closeMenu() {
-        pop.classList.remove('opacity-100', 'scale-100');
-        pop.classList.add('opacity-0', 'scale-95');
-        pop.setAttribute('aria-hidden', 'true');
-        btn.setAttribute('aria-expanded', 'false');
-        setTimeout(function(){ pop.classList.add('invisible'); }, 150);
-        open = false;
-      }
+      let isOpen = false;
 
-      function toggle(e) {
+      toggleBtn.addEventListener('click', (e: MouseEvent) => {
         e.stopPropagation();
-        open ? closeMenu() : openMenu();
-      }
-
-      // 点击 / 触摸打开
-      btn.addEventListener('click', toggle);
-      btn.addEventListener('touchstart', toggle, { passive: true });
-
-      // 点击菜单项后自动关闭
-      Array.prototype.forEach.call(pop.querySelectorAll('a'), function(a){
-        a.addEventListener('click', closeMenu);
-        a.addEventListener('touchstart', closeMenu, { passive: true });
+        isOpen ? closeMenu() : openMenu();
+        isOpen = !isOpen;
       });
 
-      // 点击外部关闭（pointerdown 覆盖鼠标/触摸/触控笔）
-      function onOutside(ev) {
-        if (!open) return;
-        var t = ev.target;
-        // 这里不用 TS 的 isNode，直接判空并依赖 contains 的容错
-        if (!t || !root.contains(t)) closeMenu();
-      }
-      document.addEventListener('pointerdown', onOutside, { passive: true });
-
-      // ESC 关闭
-      function onKey(ev) {
-        if (ev.key === 'Escape' && open) closeMenu();
-      }
-      document.addEventListener('keydown', onKey);
-
-      // 视口变化 / 滚动时自动收起（避免遮挡）
-      function onResizeOrScroll() { if (open) closeMenu(); }
-      window.addEventListener('resize', onResizeOrScroll);
-      window.addEventListener('scroll', onResizeOrScroll, { passive: true });
-    })();
+      document.addEventListener('click', (e: MouseEvent) => {
+        const target = e.target as Node;
+        if (!toggleBtn.contains(target) && !dropdown.contains(target) && isOpen) {
+          closeMenu();
+          isOpen = false;
+        }
+      });
+    }
   </script>
 </div>
