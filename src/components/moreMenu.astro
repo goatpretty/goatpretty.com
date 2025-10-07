@@ -9,6 +9,9 @@ interface Props {
 }
 
 const { links } = Astro.props as Props;
+
+// ✅ 标记内置项（仅桌面端隐藏）
+const isBuiltIn = (name: string) => name === 'Blogs' || name === 'About';
 ---
 
 <div class="relative select-none">
@@ -21,7 +24,7 @@ const { links } = Astro.props as Props;
     More ▾
   </button>
 
-  <!-- ✅ 下拉菜单（带淡入淡出动画 + 右对齐） -->
+  <!-- 下拉菜单（带淡入淡出动画 + 右对齐） -->
   <div
     id="more-dropdown"
     class="invisible opacity-0 absolute right-0 top-full mt-2 mr-2 w-48
@@ -35,8 +38,8 @@ const { links } = Astro.props as Props;
         href={link.url}
         target="_blank"
         rel="noopener noreferrer"
-        class="block px-4 py-2 text-fontLight dark:text-fontDark
-               hover:bg-phOrange hover:text-white transition-colors"
+        class={`block px-4 py-2 text-fontLight dark:text-fontDark
+               hover:bg-phOrange hover:text-white transition-colors ${isBuiltIn(link.name) ? 'md:hidden' : ''}`}
       >
         {link.name}
       </a>

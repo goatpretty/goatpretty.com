@@ -4,7 +4,7 @@ import MoreMenu from '../components/moreMenu.astro';
 import moreLinks from '../data/moreLinks';
 import '../styles/global.css';
 
-// ✅ 自动组合更多菜单的内容（桌面端不会受影响，移动端使用）
+// ✅ 传给 More 的链接：包含自定义链接 + Blogs / About
 const fullMoreLinks = [
   ...moreLinks,
   { name: 'Blogs', url: '/' },
@@ -35,14 +35,13 @@ const fullMoreLinks = [
 
   <nav class='text-fontLight dark:text-fontDark text-xl relative'>
     <ul class='flex items-center'>
-      <!-- ✅ 桌面端显示，移动端隐藏 -->
-      <li class='hidden md:inline-flex flex-initial p-2 md:mr-2 mr-1'>
-        <a href='/'>Blogs</a>
+      <!-- ✅ 移动端整体隐藏，桌面端显示（把两个链接包在同一个 li 里，避免任何样式覆盖问题） -->
+      <li class="hidden md:flex">
+        <a href='/' class='inline-flex p-2 md:mr-2 mr-1'>Blogs</a>
+        <a href='/about' class='inline-flex p-2'>About</a>
       </li>
-      <li class='hidden md:inline-flex flex-initial p-2 md:mr-2 mr-1'>
-        <a href='/about'>About</a>
-      </li>
-      <!-- ✅ More 始终显示，但移动端内部会包含 Blogs 和 About -->
+
+      <!-- ✅ More 始终显示；移动端里会包含 Blogs / About -->
       <li class='inline-flex flex-initial p-2 relative'>
         <MoreMenu links={fullMoreLinks} />
       </li>
