@@ -11,19 +11,19 @@ interface Props {
 const { links } = Astro.props as Props;
 ---
 
-<!-- ✅ 响应式 More 菜单 -->
+<!-- ✅ 响应式 More 菜单（桌面：右对齐下拉；移动：全屏模糊浮层） -->
 <div class="relative select-none">
-  <!-- 按钮（桌面端为文字，移动端为 ☰ 图标） -->
+  <!-- 触发按钮（桌面端为文字，移动端为 ☰ 图标） -->
   <button
     id="more-toggle"
     class="inline-flex flex-initial p-2 cursor-pointer
            text-fontLight dark:text-fontDark hover:text-phOrange transition
            items-center justify-center"
     aria-label="More menu"
+    aria-expanded="false"
   >
     <!-- 桌面端 -->
     <span class="hidden md:inline">More ▾</span>
-
     <!-- 移动端 -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -37,14 +37,15 @@ const { links } = Astro.props as Props;
     </svg>
   </button>
 
-  <!-- ✅ 桌面端菜单（右对齐） -->
+  <!-- 🖥️ 桌面端菜单（右对齐，淡入缩放） -->
   <div
     id="more-dropdown-desktop"
     class="invisible opacity-0 absolute right-0 top-full mt-2 w-48
            bg-bgLight dark:bg-bgDark
            border border-gray-300 dark:border-gray-700
            rounded-xl shadow-xl overflow-hidden z-50
-           transform scale-95 transition-all duration-300 ease-out hidden md:block"
+           transform scale-95 transition-all duration-200 ease-out hidden md:block"
+    role="menu"
   >
     {links.map((link) => (
       <a
@@ -53,23 +54,26 @@ const { links } = Astro.props as Props;
         rel="noopener noreferrer"
         class="block px-4 py-2 text-fontLight dark:text-fontDark
                hover:bg-phOrange hover:text-white transition-colors text-center"
+        role="menuitem"
       >
         {link.name}
       </a>
     ))}
   </div>
 
-  <!-- ✅ 移动端全屏模糊菜单 -->
+  <!-- 📱 移动端全屏模糊遮罩 + 弹窗（iOS 风格） -->
   <div
     id="more-overlay-mobile"
-    class="fixed inset-0 bg-black/40 backdrop-blur-md z-50 hidden md:hidden
-           items-center justify-center transition-opacity duration-300 opacity-0"
+    class="fixed inset-0 bg-black/40 backdrop-blur-md z-[100] hidden md:hidden
+           items-center justify-center transition-opacity duration-200 opacity-0"
+    aria-hidden="true"
   >
     <div
       id="more-dropdown-mobile"
       class="bg-bgLight/90 dark:bg-bgDark/90 rounded-2xl shadow-2xl
              border border-gray-300 dark:border-gray-700
-             w-64 text-center overflow-hidden transform scale-95 transition-all duration-300"
+             w-64 text-center overflow-hidden transform scale-95 transition-transform duration-200"
+      role="menu"
     >
       {links.map((link) => (
         <a
@@ -78,6 +82,7 @@ const { links } = Astro.props as Props;
           rel="noopener noreferrer"
           class="block px-6 py-3 text-fontLight dark:text-fontDark
                  hover:bg-phOrange hover:text-white transition-colors"
+          role="menuitem"
         >
           {link.name}
         </a>
@@ -85,6 +90,7 @@ const { links } = Astro.props as Props;
       <button
         id="close-menu"
         class="w-full py-3 text-fontLight dark:text-fontDark hover:text-phOrange transition"
+        aria-label="Close menu"
       >
         Close ✕
       </button>
@@ -92,27 +98,31 @@ const { links } = Astro.props as Props;
   </div>
 
   <script>
-    const toggleBtn = document.getElementById('more-toggle') as HTMLButtonElement | null;
-    const desktopMenu = document.getElementById('more-dropdown-desktop') as HTMLDivElement | null;
-    const mobileOverlay = document.getElementById('more-overlay-mobile') as HTMLDivElement | null;
-    const mobileMenu = document.getElementById('more-dropdown-mobile') as HTMLDivElement | null;
-    const closeBtn = document.getElementById('close-menu') as HTMLButtonElement | null;
+    // ⚠️ 纯原生 JS（不要使用 TS 断言）
+    const toggleBtn = document.getElementById('more-toggle');
+    const desktopMenu = document.getElementById('more-dropdown-desktop');
+    const mobileOverlay = document.getElementById('more-overlay-mobile');
+    const mobileMenu = document.getElementById('more-dropdown-mobile');
+    const closeBtn = document.getElementById('close-menu');
 
     let isOpen = false;
 
+    const isDesktop = () => window.innerWidth >= 768;
+
+    // 桌面端开关
     const openDesktop = () => {
       if (!desktopMenu) return;
       desktopMenu.classList.remove('invisible', 'opacity-0', 'scale-95');
       desktopMenu.classList.add('visible', 'opacity-100', 'scale-100');
     };
-
     const closeDesktop = () => {
       if (!desktopMenu) return;
       desktopMenu.classList.add('opacity-0', 'scale-95');
       desktopMenu.classList.remove('opacity-100', 'scale-100');
-      setTimeout(() => desktopMenu.classList.add('invisible'), 200);
+      setTimeout(() => desktopMenu.classList.add('invisible'), 180);
     };
 
+    // 移动端开关（带淡入淡出）
     const openMobile = () => {
       if (!mobileOverlay || !mobileMenu) return;
       mobileOverlay.classList.remove('hidden');
@@ -122,7 +132,6 @@ const { links } = Astro.props as Props;
         mobileMenu.style.transform = 'scale(1)';
       });
     };
-
     const closeMobile = () => {
       if (!mobileOverlay || !mobileMenu) return;
       mobileOverlay.style.opacity = '0';
@@ -130,40 +139,71 @@ const { links } = Astro.props as Props;
       setTimeout(() => {
         mobileOverlay.classList.add('hidden');
         mobileOverlay.classList.remove('flex');
-      }, 200);
+      }, 180);
     };
 
+    // 触发按钮
     if (toggleBtn) {
       toggleBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        const isDesktop = window.innerWidth >= 768;
-        if (isDesktop) {
+        if (isDesktop()) {
           isOpen ? closeDesktop() : openDesktop();
         } else {
           isOpen ? closeMobile() : openMobile();
         }
         isOpen = !isOpen;
+        toggleBtn.setAttribute('aria-expanded', String(isOpen));
       });
     }
 
+    // 点击空白处关闭（桌面）
     document.addEventListener('click', (e) => {
-      const target = e.target as Node;
-      const isDesktop = window.innerWidth >= 768;
-      if (isDesktop && desktopMenu && !desktopMenu.contains(target) && !toggleBtn?.contains(target)) {
+      if (!isDesktop()) return;
+      const target = e.target;
+      if (
+        desktopMenu &&
+        !desktopMenu.contains(target) &&
+        !toggleBtn?.contains(target)
+      ) {
         closeDesktop();
         isOpen = false;
+        toggleBtn?.setAttribute('aria-expanded', 'false');
       }
     });
 
+    // 移动端：点击遮罩或关闭按钮关闭
+    mobileOverlay?.addEventListener('click', (e) => {
+      if (e.target === mobileOverlay) {
+        closeMobile();
+        isOpen = false;
+        toggleBtn?.setAttribute('aria-expanded', 'false');
+      }
+    });
     closeBtn?.addEventListener('click', () => {
       closeMobile();
       isOpen = false;
+      toggleBtn?.setAttribute('aria-expanded', 'false');
     });
 
+    // ESC 关闭（两端通用）
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (isDesktop()) {
+          closeDesktop();
+        } else {
+          closeMobile();
+        }
+        isOpen = false;
+        toggleBtn?.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // 尺寸变化时重置
     window.addEventListener('resize', () => {
       closeDesktop();
       closeMobile();
       isOpen = false;
+      toggleBtn?.setAttribute('aria-expanded', 'false');
     });
   </script>
 </div>
