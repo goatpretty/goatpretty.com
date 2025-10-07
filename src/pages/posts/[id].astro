@@ -42,10 +42,32 @@ const { Content, headings } = await render(entry);
                 {
                     headings.map((heading) => (
                         <a
-                            class={`block font-bold text-ellipsis overflow-hidden
-                                    text-profileTextLight dark:text-profileTextDark 
+                            class={`block font-bold text-profileTextLight dark:text-profileTextDark 
+                                    hover:bg-bgLight dark:hover:bg-bgDark 
                                     hover:bg-bgLight dark:hover:bg-bgDark
-                                    rounded-md w-full toc-depth-${heading.depth}`}
+                                    `}
+                            href={`#${heading.slug}`}
+                        >
+                            {heading.text}
+                        </a>
+                    ))
+                }
+            </div>
+
+
+
+
+            <div slot="headings" class="w-11/12 space-y-1">
+                {
+                    headings.map((heading) => (
+                        <a
+                            class={`block font-bold text-profileTextLight dark:text-profileTextDark
+                                    hover:bg-bgLight dark:hover:bg-bgDark
+                                    rounded-md w-full px-2 py-1 break-words leading-snug
+                                    ${heading.depth === 1 ? 'text-lg mt-1' : ''}
+                                    ${heading.depth === 2 ? 'pl-2 text-base' : ''}
+                                    ${heading.depth === 3 ? 'pl-4 text-sm' : ''}
+                                    ${heading.depth === 4 ? 'pl-6 text-sm opacity-90' : ''}`}
                             href={`#${heading.slug}`}
                         >
                             {heading.text}
