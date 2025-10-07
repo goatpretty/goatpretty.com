@@ -12,24 +12,27 @@ const { links } = Astro.props as Props;
 ---
 
 <!-- ✅ 通用 More 菜单（桌面 + 移动） -->
-<div class="relative select-none">
+<div id="more-root" class="relative select-none">
   <!-- 触发按钮 -->
   <button
     id="more-toggle"
-    class="inline-flex flex-initial p-2 cursor-pointer items-center justify-center
-           text-fontLight dark:text-fontDark hover:text-phOrange transition"
+    type="button"
+    class="inline-flex items-center justify-center cursor-pointer select-none
+           text-fontLight dark:text-fontDark hover:text-phOrange transition
+           px-2 py-1"
     aria-label="Toggle menu"
     aria-expanded="false"
+    aria-haspopup="true"
   >
     <!-- 桌面端文案 -->
     <span class="hidden md:inline">More ▾</span>
 
-    <!-- 移动端汉堡按钮 -->
+    <!-- 移动端汉堡图标 -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="h-6 w-6 md:hidden"
-      fill="none"
       viewBox="0 0 24 24"
+      fill="none"
       stroke="currentColor"
       stroke-width="2"
       aria-hidden="true"
@@ -38,22 +41,28 @@ const { links } = Astro.props as Props;
     </svg>
   </button>
 
-  <!-- ✅ 下拉菜单（右对齐，桌面/移动同款） -->
+  <!-- 下拉菜单（右对齐，动画/高层级） -->
   <div
     id="more-dropdown"
     class="absolute right-0 top-full mt-2 w-56
            bg-bgLight dark:bg-bgDark border border-gray-300 dark:border-gray-700
-           rounded-xl shadow-lg overflow-hidden z-[1000]
-           opacity-0 invisible scale-95
-           transition-all duration-200 ease-out"
+           rounded-xl shadow-xl overflow-hidden
+           opacity-0 invisible scale-95 transform-gpu
+           transition-all duration-200 ease-out
+           z-[9999]"
+    role="menu"
+    aria-hidden="true"
   >
     {links.map((link) => (
       <a
         href={link.url}
         target={link.url.startsWith('http') ? '_blank' : '_self'}
         rel="noopener noreferrer"
-        class="block px-4 py-2 text-fontLight dark:text-fontDark
-               hover:bg-phOrange hover:text-white transition-colors text-center"
+        role="menuitem"
+        class="block px-4 py-2 text-center
+               text-fontLight dark:text-fontDark
+               hover:bg-phOrange hover:text-white
+               transition-colors"
       >
         {link.name}
       </a>
@@ -61,75 +70,72 @@ const { links } = Astro.props as Props;
   </div>
 
   <script>
-    (function () {
-      // 元素
-      const toggleBtn = document.getElementById('more-toggle') as HTMLButtonElement | null;
-      const dropdown = document.getElementById('more-dropdown') as HTMLDivElement | null;
+    // ---- 类型与工具 ----
+    function isNode(x: unknown): x is Node {
+      return x instanceof Node;
+    }
 
-      if (!toggleBtn || !dropdown) return;
+    const root = document.getElementById('more-root') as HTMLDivElement | null;
+    const toggleBtn = document.getElementById('more-toggle') as HTMLButtonElement | null;
+    const dropdown = document.getElementById('more-dropdown') as HTMLDivElement | null;
 
+    if (root && toggleBtn && dropdown) {
       let isOpen = false;
 
-      // 类型守卫：修复 TS 报错（EventTarget -> Node）
-      function isNode(x: unknown): x is Node {
-        return x instanceof Node;
-      }
-
-      // 开关
-      const openMenu = () => {
+      const openMenu = (): void => {
         dropdown.classList.remove('invisible', 'opacity-0', 'scale-95');
         dropdown.classList.add('visible', 'opacity-100', 'scale-100');
+        dropdown.setAttribute('aria-hidden', 'false');
         toggleBtn.setAttribute('aria-expanded', 'true');
         isOpen = true;
       };
 
-      const closeMenu = () => {
+      const closeMenu = (): void => {
         dropdown.classList.remove('opacity-100', 'scale-100');
         dropdown.classList.add('opacity-0', 'scale-95');
+        dropdown.setAttribute('aria-hidden', 'true');
         toggleBtn.setAttribute('aria-expanded', 'false');
-        setTimeout(() => {
-          dropdown.classList.add('invisible');
-        }, 150);
+        // 等动画结束再设为 invisible，避免闪烁
+        setTimeout(() => dropdown.classList.add('invisible'), 150);
         isOpen = false;
       };
 
-      // 触发（同时支持移动端 touchstart）
-      const onToggle = (e: Event) => {
+      const toggle = (e: MouseEvent | TouchEvent): void => {
         e.stopPropagation();
         isOpen ? closeMenu() : openMenu();
       };
 
-      toggleBtn.addEventListener('click', onToggle, { passive: true });
-      toggleBtn.addEventListener('touchstart', onToggle, { passive: true });
+      // 触发：点击 + 触摸（移动端）
+      toggleBtn.addEventListener('click', toggle, { passive: true });
+      toggleBtn.addEventListener('touchstart', toggle, { passive: true });
 
-      // 点击菜单项后自动关闭
+      // 点击菜单项自动关闭
       dropdown.querySelectorAll('a').forEach((a) => {
         a.addEventListener('click', () => closeMenu(), { passive: true });
         a.addEventListener('touchstart', () => closeMenu(), { passive: true });
       });
 
-      // 点击外部关闭（TS 安全）
-      const onOutside = (e: Event) => {
-        const target = e.target;
+      // 点击外部关闭（pointerdown 覆盖鼠标/触摸/触控笔）
+      const onOutside = (e: PointerEvent): void => {
         if (!isOpen) return;
+        const target = e.target;
         if (!isNode(target)) return;
-        if (!dropdown.contains(target) && !toggleBtn.contains(target)) {
+        if (!root.contains(target)) {
           closeMenu();
         }
       };
-
-      document.addEventListener('click', onOutside, { passive: true });
-      document.addEventListener('touchstart', onOutside, { passive: true });
+      document.addEventListener('pointerdown', onOutside, { passive: true });
 
       // ESC 关闭
-      document.addEventListener('keydown', (e: KeyboardEvent) => {
+      const onKey = (e: KeyboardEvent): void => {
         if (e.key === 'Escape' && isOpen) closeMenu();
-      });
+      };
+      document.addEventListener('keydown', onKey);
 
-      // 视口变化时收起，避免位置错乱
-      window.addEventListener('resize', () => {
-        if (isOpen) closeMenu();
-      });
-    })();
+      // 视口/滚动变化时收起（避免位置错乱 & 阻挡）
+      const onResize = (): void => { if (isOpen) closeMenu(); };
+      window.addEventListener('resize', onResize);
+      window.addEventListener('scroll', onResize, { passive: true });
+    }
   </script>
 </div>
