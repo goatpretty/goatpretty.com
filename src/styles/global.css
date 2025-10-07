@@ -198,8 +198,10 @@ code {
 .toc-depth-6 { margin-left: 5rem; }
 
 /* =========================
-   KaTeX 数学公式居中
+   数学公式居中（KaTeX + MathJax）
    ========================= */
+
+/* KaTeX */
 .katex-display {
     display: block;
     text-align: center;
@@ -207,5 +209,21 @@ code {
 }
 .post-content p:has(.katex-display) {
     text-align: center;
+    text-indent: 0 !important;
+}
+
+/* MathJax v3 (SVG/CHTML) */
+mjx-container[jax="SVG"],
+mjx-container[jax="CHTML"],
+.MathJax {
+    display: block !important;
+    text-align: center !important;
+    margin: 1.2em auto !important;
+}
+
+/* 避免缩进干扰 */
+.post-content p:has(mjx-container),
+.post-content p:has(.MathJax) {
+    text-align: center !important;
     text-indent: 0 !important;
 }
