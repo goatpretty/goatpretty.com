@@ -6,17 +6,15 @@ import config from '../../config';
 
 <div
   class="bg-foilLight dark:bg-foilDark flex flex-col items-center
-         text-bg text-profileTextLight dark:text-profileTextDark
-         mt-2 md:mx-6 mx-4
-         rounded-2xl
-         p-4 pt-0 transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
+         mt-2 md:ml-2 md:mr-3 ml-3 mr-3 pt-2 rounded-2xl
+         transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
 >
-  <div class="flex flex-row mt-3 mb-2 items-center">
-    <FriendLinks class="h-6 w-6 mr-2 text-phOrange" />
-    <span class="font-semibold tracking-wide">Friend Links</span>
+  <div class="flex flex-row items-center justify-center mt-3 mb-3">
+    <FriendLinks class="h-7 w-7 mr-2 text-phOrange" />
+    <span class="font-semibold text-xl md:text-2xl tracking-wide">Friend Links</span>
   </div>
 
-  <div class="flex flex-col w-full space-y-1">
+  <div class="flex flex-col w-full space-y-2 mb-3">
     {
       Object.entries(config.friendlink).map(([blogName, link]) => (
         <FriendLinkItem blogName={blogName} link={link} />
