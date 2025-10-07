@@ -87,8 +87,8 @@
 body,
 html {
     font-family: 'David Libre', 'LXGW WenKai', Georgia, 'Times New Roman', Times, serif;
-    font-size: 17px;        /* 正文基准字号稍大 */
-    line-height: 1.9;       /* 舒适行距 */
+    font-size: 17px;
+    line-height: 1.9;
     color: #222;
     background-color: #fff;
     height: 100%;
@@ -139,8 +139,8 @@ code {
 }
 
 /* ✅ 普通段落首行缩进 */
-.post-content > p:not(.no-indent) {
-    text-indent: 2em;      
+.post-content p:not(.no-indent) {
+    text-indent: 2em;
     margin: 0 0 1.2em 0;
 }
 
@@ -171,7 +171,6 @@ code {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-/* 图片说明文字 */
 .post-content figure {
     text-align: center;
     margin: 1.5em auto;
