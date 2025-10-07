@@ -17,12 +17,15 @@ import '../styles/global.css';
         transition={{
           duration: 0.4,
         }}
-      >
+      >        
         <div
-          class="bg-foilLight dark:bg-foilDark flex flex-col items-center mt-2 ml-8 mr-4 rounded-2xl pt-4 pb-4"
+          class="bg-foilLight dark:bg-foilDark flex flex-col items-center
+         mt-2 md:ml-2 md:mr-3 ml-3 mr-3 pt-2 pb-3 rounded-2xl
+         transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
         >
-          <slot name="headings" />
+         <slot name="headings" />
         </div>
+
         <FriendLink />
       </motion.div>
     </div>
