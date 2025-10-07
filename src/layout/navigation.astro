@@ -4,8 +4,8 @@ import MoreMenu from '../components/moreMenu.astro';
 import moreLinks from '../data/moreLinks';
 import '../styles/global.css';
 
-// ✅ 在移动端自动把 Blogs / About 加入 More 菜单
-const fullMoreLinks = [
+// ✅ 定义：桌面端只用 moreLinks，移动端额外添加 Blogs & About
+const mobileMoreLinks = [
   ...moreLinks,
   { name: 'Blogs', url: '/' },
   { name: 'About', url: '/about' },
@@ -18,7 +18,7 @@ const fullMoreLinks = [
          flex justify-between items-center
          z-50 relative"
 >
-  <!-- 🐐 左侧标题 -->
+  <!-- 🐐 左侧 Logo -->
   <div class="flex items-center">
     <a href="/" class="md:text-4xl text-2xl font-bold whitespace-nowrap">
       <span class="text-phBlack dark:text-phWhite">GoatPretty's</span>
@@ -36,10 +36,10 @@ const fullMoreLinks = [
     </a>
   </div>
 
-  <!-- 🧭 导航菜单 -->
+  <!-- 🧭 导航栏 -->
   <nav class="text-fontLight dark:text-fontDark text-xl relative">
     <ul class="flex items-center">
-      <!-- 桌面端显示 -->
+      <!-- 💻 桌面端：独立显示 Blogs / About -->
       <li class="hidden md:inline-flex flex-initial p-2 md:mr-2 mr-1">
         <a href="/">Blogs</a>
       </li>
@@ -47,9 +47,17 @@ const fullMoreLinks = [
         <a href="/about">About</a>
       </li>
 
-      <!-- 所有端都显示的 More / ☰ 菜单 -->
+      <!-- ☰ 桌面端与移动端都显示，但传入的链接不同 -->
       <li class="inline-flex flex-initial p-2 relative">
-        <MoreMenu links={fullMoreLinks} />
+        <!-- 桌面端：只传入 moreLinks -->
+        <div class="hidden md:block">
+          <MoreMenu links={moreLinks} />
+        </div>
+
+        <!-- 移动端：包含 Blogs / About -->
+        <div class="md:hidden">
+          <MoreMenu links={mobileMoreLinks} />
+        </div>
       </li>
     </ul>
   </nav>
