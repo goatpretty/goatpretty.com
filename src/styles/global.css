@@ -196,3 +196,16 @@ code {
 .toc-depth-4 { margin-left: 3rem; }
 .toc-depth-5 { margin-left: 4rem; }
 .toc-depth-6 { margin-left: 5rem; }
+
+/* =========================
+   KaTeX 数学公式居中
+   ========================= */
+.katex-display {
+    display: block;
+    text-align: center;
+    margin: 1.2em 0;
+}
+.post-content p:has(.katex-display) {
+    text-align: center;
+    text-indent: 0 !important;
+}
