@@ -38,25 +38,7 @@ const { Content, headings } = await render(entry);
             </div>
 
             <!-- 📌 左侧目录（不编号，仅层级缩进） -->
-            <div slot='headings' class='w-11/12 space-y-1'>
-                {
-                    headings.map((heading) => (
-                        <a
-                            class={`block font-bold text-profileTextLight dark:text-profileTextDark 
-                                    hover:bg-bgLight dark:hover:bg-bgDark 
-                                    hover:bg-bgLight dark:hover:bg-bgDark
-                                    `}
-                            href={`#${heading.slug}`}
-                        >
-                            {heading.text}
-                        </a>
-                    ))
-                }
-            </div>
-
-
-
-
+            
             <div slot="headings" class="w-11/12 space-y-1">
                 {
                     headings.map((heading) => (
