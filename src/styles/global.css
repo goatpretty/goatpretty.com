@@ -5,8 +5,6 @@
 /* =========================
    David Libre 字体
    ========================= */
-
-/* david-libre-latin-400-normal */
 @font-face {
     font-family: 'David Libre';
     font-style: normal;
@@ -14,12 +12,7 @@
     font-weight: 400;
     src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-400-normal.woff2) format('woff2'),
          url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-400-normal.woff) format('woff');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-                   U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-                   U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-
-/* david-libre-latin-500-normal */
 @font-face {
     font-family: 'David Libre';
     font-style: normal;
@@ -27,12 +20,7 @@
     font-weight: 500;
     src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-500-normal.woff2) format('woff2'),
          url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-500-normal.woff) format('woff');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-                   U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-                   U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-
-/* david-libre-latin-700-normal */
 @font-face {
     font-family: 'David Libre';
     font-style: normal;
@@ -40,51 +28,6 @@
     font-weight: 700;
     src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-700-normal.woff2) format('woff2'),
          url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-700-normal.woff) format('woff');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-                   U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-                   U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* david-libre-latin-ext-400-normal */
-@font-face {
-    font-family: 'David Libre';
-    font-style: normal;
-    font-display: fallback;
-    font-weight: 400;
-    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-400-normal.woff2) format('woff2'),
-         url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-400-normal.woff) format('woff');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
-                   U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
-                   U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
-                   U+A720-A7FF;
-}
-
-/* david-libre-latin-ext-500-normal */
-@font-face {
-    font-family: 'David Libre';
-    font-style: normal;
-    font-display: fallback;
-    font-weight: 500;
-    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-500-normal.woff2) format('woff2'),
-         url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-500-normal.woff) format('woff');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
-                   U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
-                   U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
-                   U+A720-A7FF;
-}
-
-/* david-libre-latin-ext-700-normal */
-@font-face {
-    font-family: 'David Libre';
-    font-style: normal;
-    font-display: fallback;
-    font-weight: 700;
-    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-700-normal.woff2) format('woff2'),
-         url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-ext-700-normal.woff) format('woff');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
-                   U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
-                   U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
-                   U+A720-A7FF;
 }
 
 /* ========== 页面全局基础 ========== */
@@ -201,27 +144,47 @@ code {
    数学公式居中（KaTeX + MathJax）
    ========================= */
 
-/* KaTeX */
+/* KaTeX 块级公式 */
 .katex-display {
     display: block;
     text-align: center;
     margin: 1.2em 0;
 }
 .post-content p:has(.katex-display) {
-    text-align: center;
+    text-align: center !important;
     text-indent: 0 !important;
 }
 
-/* MathJax v3 (SVG/CHTML) */
-mjx-container[jax="SVG"],
-mjx-container[jax="CHTML"],
+/* MathJax v2 */
 .MathJax {
-    display: block !important;
-    text-align: center !important;
-    margin: 1.2em auto !important;
+    max-width: 80vw;
+    display: inline-block;
+    overflow: auto;
+    font-size: 1rem;
+    vertical-align: middle;
 }
 
-/* 避免缩进干扰 */
+/* MathJax v3 块级公式 */
+mjx-container[jax="SVG"][display="true"],
+mjx-container[jax="CHTML"][display="true"] {
+    max-width: 80vw;
+    display: block !important;
+    margin: 1.2em auto !important;
+    font-size: 1rem;
+    text-align: center !important;
+    overflow-x: auto;
+}
+
+/* MathJax v3 行内公式 */
+mjx-container[jax="SVG"][display="false"],
+mjx-container[jax="CHTML"][display="false"] {
+    display: inline-block;
+    margin: 0 0.25em;
+    vertical-align: middle;
+    font-size: 1rem;
+}
+
+/* 避免段落缩进干扰公式 */
 .post-content p:has(mjx-container),
 .post-content p:has(.MathJax) {
     text-align: center !important;
