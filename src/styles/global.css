@@ -2,6 +2,10 @@
 @import url("https://fontsapi.zeoseven.com/442/main/result.css");
 @import url("https://fontsapi.zeoseven.com/292/main/result.css");
 
+/* =========================
+   David Libre 字体
+   ========================= */
+
 /* david-libre-latin-400-normal */
 @font-face {
     font-family: 'David Libre';
@@ -128,7 +132,7 @@ code {
 }
 
 /* =========================
-   正文样式
+   正文样式（缩进 + 图片优化）
    ========================= */
 .post-content {
     line-height: 1.9;
@@ -162,7 +166,7 @@ code {
     text-indent: 0 !important;
 }
 
-/* ========== 图片样式 ========== */
+/* 图片样式 */
 .post-content img {
     display: block;
     margin: 1.5em auto;
@@ -182,3 +186,13 @@ code {
 }
 
 /* 临时关闭缩进：<p class="no-indent"> */
+
+/* =========================
+   目录（headings）缩进样式
+   ========================= */
+.toc-depth-1 { margin-left: 0; }
+.toc-depth-2 { margin-left: 1rem; }
+.toc-depth-3 { margin-left: 2rem; }
+.toc-depth-4 { margin-left: 3rem; }
+.toc-depth-5 { margin-left: 4rem; }
+.toc-depth-6 { margin-left: 5rem; }
