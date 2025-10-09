@@ -124,13 +124,14 @@ code {
 }
 .post-content figcaption {
     font-size: 0.9rem;
+    color: #666;
     margin-top: 0.5em;
 }
 
 /* 临时关闭缩进：<p class="no-indent"> */
 
 /* =========================
-   目录（TOC）缩进 — CSS 变量控制
+   目录（TOC）缩进
    ========================= */
 .toc .toc-item {
     display: block;
@@ -165,31 +166,28 @@ code {
     font-size: 1rem;
 }
 
-/* MathJax v3 SVG/CHTML — 块级公式 */
-mjx-container[jax="SVG"][display="true"],
-mjx-container[jax="CHTML"][display="true"] {
-    display: flex !important;           
+/* ✅ MathJax v3 — 块级公式（居中显示） */
+.post-content mjx-container[display="true"],
+.post-content .MathJax[display="true"] {
+    display: flex !important;
     justify-content: center !important;
     margin: 1.2em auto !important;
-    font-size: 1rem;
-    max-width: 100%;
-    overflow-x: auto;
+    text-align: center !important;
 }
 
-/* MathJax v3 SVG/CHTML — 行内公式 */
-mjx-container[jax="SVG"][display="false"],
-mjx-container[jax="CHTML"][display="false"] {
+/* ✅ 仅块级公式所在段落去掉缩进 */
+.post-content p:has(mjx-container[display="true"]),
+.post-content p:has(.MathJax[display="true"]) {
+    text-align: center !important;
+    text-indent: 0 !important;
+}
+
+/* ✅ 行内公式保持原状（不居中） */
+.post-content mjx-container[display="false"],
+.post-content .MathJax[display="false"] {
     display: inline-block !important;
     vertical-align: middle;
     margin: 0 0.25em;
-    font-size: 1rem;
-}
-
-/* 避免段落缩进干扰公式 */
-.post-content p:has(mjx-container),
-.post-content p:has(.MathJax) {
-    text-align: center !important;
-    text-indent: 0 !important;
 }
 
 /* =========================
