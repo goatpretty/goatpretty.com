@@ -4,25 +4,42 @@ import "../styles/global.css";
 const { frontmatter, Content } = Astro.props;
 ---
 
-<article class="post">
-  {frontmatter.title && <h1 class="post-title">{frontmatter.title}</h1>}
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{frontmatter.title}</title>
 
-  {frontmatter.publishDate && (
-    <p class="post-meta">
-      <time datetime={frontmatter.publishDate}>
-        {frontmatter.publishDate}
-      </time>
-    </p>
-  )}
+    <!-- ✅ 全局样式 -->
+    <link rel="stylesheet" href="../styles/global.css" />
 
-  {frontmatter.description && (
-    <p class="post-description">{frontmatter.description}</p>
-  )}
+    <!-- ✅ 如果 frontmatter 指定了 customStyle，就单独加载 -->
+    {frontmatter.customStyle && (
+      <link rel="stylesheet" href={frontmatter.customStyle} />
+    )}
+  </head>
 
-  <div class="post-content">
-    <Content />
-  </div>
-</article>
+  <body>
+    <article class="post">
+      {frontmatter.title && <h1 class="post-title">{frontmatter.title}</h1>}
+
+      {frontmatter.publishDate && (
+        <p class="post-meta">
+          <time datetime={frontmatter.publishDate}>
+            {frontmatter.publishDate}
+          </time>
+        </p>
+      )}
+
+      {frontmatter.description && (
+        <p class="post-description">{frontmatter.description}</p>
+      )}
+
+      <div class="post-content">
+        <Content />
+      </div>
+    </article>
+  </body>
+</html>
 
 <style>
 .post {

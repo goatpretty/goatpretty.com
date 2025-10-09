@@ -1,0 +1,111 @@
+/* =========================================================
+   专属样式：党史随笔（dangshi-suibi）
+   不影响其他文章，仅对 .post-content 生效
+   ========================================================= */
+
+/* 正文整体 */
+.post-content {
+  font-family: "Source Han Serif SC", "思源宋体", "SimSun", "宋体",
+    "Noto Serif SC", "Times New Roman", serif;
+  font-size: 1.06rem;
+  line-height: 2;
+  color: #2a2a2a;
+  letter-spacing: 0.3px;
+}
+
+/* 段落：正文红调但不刺眼 */
+.post-content p {
+  text-indent: 2em;
+  color: #2c1a1a; /* 深棕红，适合党史类文章 */
+  margin: 0 0 1.2em 0;
+}
+
+/* 小标题（H2~H4）强化红色系 */
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  color: #b22222; /* 深红 */
+  font-family: "Source Han Serif SC", "思源宋体", "Noto Serif SC", serif;
+  font-weight: 600;
+  border-left: 4px solid #b22222;
+  padding-left: 0.5em;
+  margin-top: 1.8em;
+  margin-bottom: 0.8em;
+  line-height: 1.6;
+}
+
+/* 强调文字 */
+.post-content strong {
+  color: #c1121f; /* 鲜红 */
+  font-weight: 600;
+}
+
+/* 列表 */
+.post-content ul,
+.post-content ol {
+  color: #2b1a1a;
+  padding-left: 2em;
+}
+.post-content li {
+  margin: 0.4em 0;
+}
+
+/* 引用块（带浅红背景） */
+.post-content blockquote {
+  border-left: 4px solid #b22222;
+  background: #fff8f8;
+  padding: 0.8em 1.2em;
+  color: #4a1e1e;
+  font-style: normal;
+  border-radius: 6px;
+  margin: 1.4em 0;
+}
+
+/* 图片（保持原来居中风格） */
+.post-content img {
+  display: block;
+  margin: 1.5em auto;
+  border-radius: 0.6rem;
+  box-shadow: 0 2px 8px rgba(180, 40, 40, 0.1);
+  max-width: 100%;
+}
+
+/* 表格（适配红调边框） */
+.post-content table {
+  border-collapse: collapse;
+  margin: 1.5em auto;
+  width: 95%;
+  font-size: 0.95rem;
+}
+.post-content th,
+.post-content td {
+  border: 1px solid #d99;
+  padding: 0.4em 0.8em;
+}
+.post-content th {
+  background-color: #fff5f5;
+  color: #8b0000;
+}
+
+/* 代码块（沿用全局但略调色） */
+.post-content pre {
+  background-color: #faf6f6;
+  border-left: 4px solid #c1121f;
+  border-radius: 0.5rem;
+  padding: 1em 1.2em;
+  overflow-x: auto;
+}
+.post-content code {
+  font-family: "Maple Mono NF CN", Consolas, monospace;
+  color: #a22;
+}
+
+/* 超链接（红调 hover） */
+.post-content a {
+  color: #b22222;
+  text-decoration: underline dotted;
+}
+.post-content a:hover {
+  color: #d62727;
+  text-decoration: underline solid;
+}
