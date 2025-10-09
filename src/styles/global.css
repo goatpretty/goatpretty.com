@@ -6,92 +6,94 @@
    字体
    ========================= */
 @font-face {
-    font-family: 'David Libre';
-    font-style: normal;
-    font-display: fallback;
-    font-weight: 400;
-    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-400-normal.woff2) format('woff2'),
-         url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-400-normal.woff) format('woff');
+  font-family: 'David Libre';
+  font-style: normal;
+  font-display: fallback;
+  font-weight: 400;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-400-normal.woff2) format('woff2'),
+       url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-400-normal.woff) format('woff');
 }
 @font-face {
-    font-family: 'David Libre';
-    font-style: normal;
-    font-display: fallback;
-    font-weight: 500;
-    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-500-normal.woff2) format('woff2'),
-         url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-500-normal.woff) format('woff');
+  font-family: 'David Libre';
+  font-style: normal;
+  font-display: fallback;
+  font-weight: 500;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-500-normal.woff2) format('woff2'),
+       url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-500-normal.woff) format('woff');
 }
 @font-face {
-    font-family: 'David Libre';
-    font-style: normal;
-    font-display: fallback;
-    font-weight: 700;
-    src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-700-normal.woff2) format('woff2'),
-         url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-700-normal.woff) format('woff');
-}
-
-/* ========== 页面全局基础 ========== */
-body,
-html {
-    font-family: 'David Libre', 'LXGW WenKai', Georgia, 'Times New Roman', Times, serif;
-    font-size: 17px;
-    line-height: 1.9;
-    color: #222;
-    background-color: #fff;
-    height: 100%;
-}
-
-/* 代码块变量 */
-:root {
-    --code-bg-color-light: #f6f8fa;
-    --code-bg-color-dark: #333333;
-}
-
-/* 内联代码 */
-code {
-    border: 1px solid #ddd;
-    border-radius: 0.2rem;
-    padding: 0.15rem 0.35rem;
-    background-color: var(--code-bg-color-light);
-    font-family: "Maple Mono NF CN", Consolas, monospace !important;
-    font-size: 0.95em;
-    font-weight: 400;
-}
-
-.astro-code code {
-    border: none !important;
-}
-
-/* 暗色模式 */
-@media (prefers-color-scheme: dark) {
-    body {
-        color: #ddd;
-        background-color: #1e1e1e;
-    }
-    code {
-        background-color: var(--code-bg-color-dark);
-        border-color: #444;
-    }
+  font-family: 'David Libre';
+  font-style: normal;
+  font-display: fallback;
+  font-weight: 700;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-700-normal.woff2) format('woff2'),
+       url(https://cdn.jsdelivr.net/fontsource/fonts/david-libre@latest/latin-700-normal.woff) format('woff');
 }
 
 /* =========================
-   正文样式（缩进 + 图片优化）
+   页面基础
+   ========================= */
+html,
+body {
+  font-family: 'David Libre', 'LXGW WenKai', Georgia, 'Times New Roman', Times, serif;
+  font-size: 17px;
+  line-height: 1.9;
+  color: #222;
+  background-color: #fff;
+  height: 100%;
+}
+
+/* =========================
+   内联代码
+   ========================= */
+:root {
+  --code-bg-color-light: #f6f8fa;
+  --code-bg-color-dark: #333;
+}
+
+code {
+  border: 1px solid #ddd;
+  border-radius: 0.2rem;
+  padding: 0.15rem 0.35rem;
+  background-color: var(--code-bg-color-light);
+  font-family: "Maple Mono NF CN", Consolas, monospace !important;
+  font-size: 0.95em;
+}
+
+.astro-code code {
+  border: none !important;
+  background: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #ddd;
+    background-color: #1e1e1e;
+  }
+  code {
+    background-color: var(--code-bg-color-dark);
+    border-color: #444;
+  }
+}
+
+/* =========================
+   正文样式
    ========================= */
 .post-content {
-    line-height: 1.9;
-    font-size: 1.05rem;
-    max-width: 820px;
-    margin: 0 auto;
-    padding: 0 1rem;
+  line-height: 1.9;
+  font-size: 1.05rem;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 /* ✅ 普通段落首行缩进 */
 .post-content p:not(.no-indent) {
-    text-indent: 2em;
-    margin: 0 0 1.2em 0;
+  text-indent: 2em;
+  margin: 0 0 1.2em 0;
 }
 
-/* 🚫 标题/列表/代码/引用/表格/图片 不缩进 */
+/* 🚫 标题、列表、代码块等不缩进 */
 .post-content h1,
 .post-content h2,
 .post-content h3,
@@ -106,195 +108,150 @@ code {
 .post-content blockquote,
 .post-content table,
 .post-content p:has(img) {
-    text-indent: 0 !important;
+  text-indent: 0 !important;
 }
 
 /* 图片样式 */
 .post-content img {
-    display: block;
-    margin: 1.5em auto;
-    max-width: 100%;
-    border-radius: 0.6rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: block;
+  margin: 1.5em auto;
+  max-width: 100%;
+  border-radius: 0.6rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .post-content figure {
-    text-align: center;
-    margin: 1.5em auto;
+  text-align: center;
+  margin: 1.5em auto;
 }
 .post-content figcaption {
-    font-size: 0.9rem;
-    color: #666;
-    margin-top: 0.5em;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5em;
 }
 
 /* =========================
-   目录（TOC）缩进
+   目录样式
    ========================= */
 .toc .toc-item {
-    display: block;
-    padding-left: calc((var(--depth) - 1) * 1rem);
-    text-indent: 0;
-    white-space: normal;
-    line-height: 1.5;
-    font-weight: 600;
+  display: block;
+  padding-left: calc((var(--depth) - 1) * 1rem);
+  text-indent: 0;
+  line-height: 1.5;
+  font-weight: 600;
 }
 
 /* =========================
-   数学公式居中（KaTeX + MathJax）
+   数学公式（KaTeX + MathJax）
    ========================= */
-.katex-display {
-    display: block;
-    text-align: center;
-    margin: 1.2em 0;
-}
-.post-content p:has(.katex-display) {
-    text-align: center !important;
-    text-indent: 0 !important;
-}
-
-/* MathJax v2 (旧版) */
-.MathJax {
-    max-width: 80vw;
-    display: block;
-    text-align: center;
-    margin: 1.2em auto;
-    font-size: 1rem;
-}
-
-/* ✅ MathJax v3 — 块级公式（居中显示） */
+.katex-display,
 .post-content mjx-container[display="true"],
 .post-content .MathJax[display="true"] {
-    display: flex !important;
-    justify-content: center !important;
-    margin: 1.2em auto !important;
-    text-align: center !important;
+  display: block;
+  text-align: center;
+  margin: 1.2em 0;
 }
-
-/* ✅ 仅块级公式所在段落去掉缩进 */
 .post-content p:has(mjx-container[display="true"]),
 .post-content p:has(.MathJax[display="true"]) {
-    text-align: center !important;
-    text-indent: 0 !important;
+  text-indent: 0 !important;
 }
-
-/* ✅ 行内公式保持原状（不居中） */
-.post-content mjx-container[display="false"],
-.post-content .MathJax[display="false"] {
-    display: inline-block !important;
-    vertical-align: middle;
-    margin: 0 0.25em;
+.MathJax {
+  max-width: 80vw;
+  margin: 1.2em auto;
 }
 
 /* =========================
-   代码块样式（语言标签 + Copy 按钮）
+   ✅ Astro / Shiki 代码块
    ========================= */
-pre[class*="language-"] {
-    position: relative;
-    border-radius: 0.6rem;
-    padding: 2.2em 1.4em 1.2em;  /* 上方留空间 */
-    background-color: #1e1e1e;
-    color: #eee;
-    overflow-x: auto;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin: 1.5em 0;
+.astro-code {
+  position: relative;
+  border-radius: 0.6rem;
+  padding: 2.2em 1.4em 1.2em;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 1.5em 0;
+  overflow-x: auto;
 }
 
-/* 左上角语言标签 */
-pre[class*="language-"]::before {
-    position: absolute;
-    top: 6px;
-    left: 12px;
-    font-size: 0.7rem;
-    font-family: "Maple Mono NF CN", monospace;
-    font-weight: 500;
-    color: #aaa;
-    text-transform: lowercase;
-    content: attr(data-lang);
+.astro-code::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 6px;
+  left: 12px;
+  font-size: 0.7rem;
+  font-family: "Maple Mono NF CN", monospace;
+  color: #aaa;
+  text-transform: lowercase;
 }
 
-/* 各语言标签 */
-pre.language-matlab::before { content: "matlab"; }
-pre.language-python::before { content: "python"; }
-pre.language-js::before, pre.language-javascript::before { content: "javascript"; }
-pre.language-cpp::before { content: "cpp"; }
-pre.language-c::before { content: "c"; }
-pre.language-html::before { content: "html"; }
-pre.language-css::before { content: "css"; }
-pre.language-json::before { content: "json"; }
-pre.language-bash::before, pre.language-shell::before { content: "bash"; }
-pre.language-md::before, pre.language-markdown::before { content: "markdown"; }
-pre.language-batch::before, pre.language-bat::before, pre.language-cmd::before { content: "batch"; }
-
-/* Copy 按钮 */
-.copy-code {
-    position: absolute;
-    top: 6px;
-    right: 12px;
-    font-size: 0.7rem;
-    font-family: "Maple Mono NF CN", monospace;
-    color: #bbb;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.15);
-    padding: 2px 7px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.15s ease-in-out;
+/* Copy 按钮（全局通用） */
+.astro-code .copy-code {
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  font-size: 0.7rem;
+  font-family: "Maple Mono NF CN", monospace;
+  color: #bbb;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 2px 7px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
 }
-.copy-code:hover {
-    color: #fff;
-    background: rgba(255,255,255,0.15);
-    border-color: rgba(255,255,255,0.3);
+.astro-code .copy-code:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.3);
 }
 
-/* 亮色模式 */
+/* 亮色模式下 Copy 按钮 */
 @media (prefers-color-scheme: light) {
-    pre[class*="language-"] {
-        background-color: #f5f5f5;
-        color: #333;
-    }
-    pre[class*="language-"]::before { color: #666; }
-    .copy-code {
-        color: #555;
-        background: rgba(0,0,0,0.05);
-        border-color: rgba(0,0,0,0.1);
-    }
-    .copy-code:hover { background: rgba(0,0,0,0.15); }
+  .astro-code::before {
+    color: #666;
+  }
+  .astro-code .copy-code {
+    color: #555;
+    background: rgba(0,0,0,0.05);
+    border-color: rgba(0,0,0,0.1);
+  }
+  .astro-code .copy-code:hover {
+    background: rgba(0,0,0,0.15);
+  }
 }
 
 /* =========================
-   标题层级样式（h1~h6）
+   标题层级样式
    ========================= */
 .post-content h1 {
-    font-size: 1.9rem;
-    font-weight: 700;
-    margin: 2em 0 1em;
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 2em 0 1em;
 }
 .post-content h2 {
-    font-size: 1.6rem;
-    font-weight: 600;
-    margin: 1.8em 0 0.9em;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 1.8em 0 0.9em;
 }
 .post-content h3 {
-    font-size: 1.35rem;
-    font-weight: 600;
-    margin: 1.6em 0 0.8em;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 1.6em 0 0.8em;
 }
 .post-content h4 {
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin: 1.4em 0 0.7em;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 1.4em 0 0.7em;
 }
 .post-content h5 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 1.2em 0 0.6em;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1.2em 0 0.6em;
 }
 .post-content h6 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin: 1em 0 0.5em;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 1em 0 0.5em;
 }
 .post-content h1,
 .post-content h2,
@@ -302,5 +259,5 @@ pre.language-batch::before, pre.language-bat::before, pre.language-cmd::before {
 .post-content h4,
 .post-content h5,
 .post-content h6 {
-    line-height: 1.4;
+  line-height: 1.4;
 }
