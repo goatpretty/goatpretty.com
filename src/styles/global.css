@@ -124,21 +124,22 @@ code {
 }
 .post-content figcaption {
     font-size: 0.9rem;
-    color: #666;
     margin-top: 0.5em;
 }
 
 /* 临时关闭缩进：<p class="no-indent"> */
 
 /* =========================
-   目录（headings）缩进样式
+   目录（TOC）缩进 — CSS 变量控制
    ========================= */
-.toc-depth-1 { margin-left: 0; }
-.toc-depth-2 { margin-left: 1rem; }
-.toc-depth-3 { margin-left: 2rem; }
-.toc-depth-4 { margin-left: 3rem; }
-.toc-depth-5 { margin-left: 4rem; }
-.toc-depth-6 { margin-left: 5rem; }
+.toc .toc-item {
+    display: block;
+    padding-left: calc((var(--depth) - 1) * 1rem);
+    text-indent: 0;
+    white-space: normal;
+    line-height: 1.5;
+    font-weight: 600;
+}
 
 /* =========================
    数学公式居中（KaTeX + MathJax）
@@ -167,7 +168,7 @@ code {
 /* MathJax v3 SVG/CHTML — 块级公式 */
 mjx-container[jax="SVG"][display="true"],
 mjx-container[jax="CHTML"][display="true"] {
-    display: flex !important;           /* 用 flex 居中内部 svg */
+    display: flex !important;           
     justify-content: center !important;
     margin: 1.2em auto !important;
     font-size: 1rem;
@@ -198,46 +199,32 @@ mjx-container[jax="CHTML"][display="false"] {
     font-size: 1.9rem;
     font-weight: 700;
     margin: 2em 0 1em;
-    color: #222;
 }
-
 .post-content h2 {
     font-size: 1.6rem;
     font-weight: 600;
     margin: 1.8em 0 0.9em;
-    color: #333;
 }
-
 .post-content h3 {
     font-size: 1.35rem;
     font-weight: 600;
     margin: 1.6em 0 0.8em;
-    color: #444;
 }
-
 .post-content h4 {
     font-size: 1.15rem;
     font-weight: 600;
     margin: 1.4em 0 0.7em;
-    color: #555;
 }
-
 .post-content h5 {
     font-size: 1rem;
     font-weight: 600;
     margin: 1.2em 0 0.6em;
-    color: #666;
-    border-left: 3px solid #a67ef8; /* 粉紫主题边条 */
-    padding-left: 0.6em;
 }
-
 .post-content h6 {
     font-size: 0.95rem;
     font-weight: 600;
     margin: 1em 0 0.5em;
-    color: #777;
 }
-
 .post-content h1,
 .post-content h2,
 .post-content h3,
