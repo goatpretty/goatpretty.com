@@ -145,6 +145,10 @@ code {
    数学公式（KaTeX + MathJax）
    ========================= */
 
+/* =========================
+   数学公式（KaTeX + MathJax）
+   ========================= */
+
 /* ✅ KaTeX 块级公式 */
 .katex-display {
   display: block;
@@ -165,7 +169,7 @@ code {
   font-size: 1rem;
 }
 
-/* ✅ MathJax v3 — 块级公式（居中显示） */
+/* ✅ MathJax v3 — CHTML 模式（标准块级公式） */
 .post-content mjx-container[display="true"],
 .post-content .MathJax[display="true"] {
   display: block !important;
@@ -174,21 +178,35 @@ code {
   line-height: normal !important;
 }
 
-/* ✅ 仅块级公式所在段落去掉缩进 */
+/* ✅ MathJax v3 — SVG 模式（块级公式） */
+.post-content > svg[data-mml-node="math"],
+.post-content p > svg[data-mml-node="math"],
+.post-content div > svg[data-mml-node="math"] {
+  display: block !important;
+  margin: 1.2em auto !important;
+  text-align: center !important;
+}
+
+/* ✅ MathJax v3 — SVG 模式（行内公式） */
+.post-content span > svg[data-mml-node="math"],
+.post-content li > svg[data-mml-node="math"],
+.post-content strong > svg[data-mml-node="math"],
+.post-content em > svg[data-mml-node="math"] {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin: 0 0.25em;
+  text-align: inherit !important;
+  line-height: normal !important;
+}
+
+/* ✅ 块级公式所在段落去掉缩进 */
 .post-content p:has(mjx-container[display="true"]),
-.post-content p:has(.MathJax[display="true"]) {
+.post-content p:has(.MathJax[display="true"]),
+.post-content p:has(> svg[data-mml-node="math"]) {
   text-align: center !important;
   text-indent: 0 !important;
 }
 
-/* ✅ 行内公式保持原状（不居中） */
-.post-content mjx-container[display="false"],
-.post-content .MathJax[display="false"] {
-  display: inline-block !important;
-  vertical-align: middle !important;
-  margin: 0 0.25em;
-  line-height: normal !important;
-}
 
 /* =========================
    ✅ Astro / Shiki 代码块
