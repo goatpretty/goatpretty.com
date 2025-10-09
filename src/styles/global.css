@@ -175,9 +175,17 @@ code {
   line-height: normal !important;
 }
 
-/* ✅ MathJax v3 行内公式 */
+/* ✅ 让块级公式内部 SVG 居中 */
+.post-content mjx-container[display="true"] > svg {
+  display: inline-block !important;
+  text-align: center !important;
+  margin: 0 auto !important;
+}
+
+/* ✅ MathJax v3 行内公式（兼容 jax="SVG"） */
 .post-content mjx-container:not([display]),
-.post-content mjx-container[display="false"] {
+.post-content mjx-container[display="false"],
+.post-content mjx-container[jax="SVG"][display="false"] {
   display: inline-block !important;
   vertical-align: middle !important;
   margin: 0 0.25em;
