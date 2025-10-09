@@ -144,20 +144,50 @@ code {
 /* =========================
    数学公式（KaTeX + MathJax）
    ========================= */
-.katex-display,
-.post-content mjx-container[display="true"],
-.post-content .MathJax[display="true"] {
+
+/* ✅ KaTeX 块级公式 */
+.katex-display {
   display: block;
   text-align: center;
   margin: 1.2em 0;
 }
-.post-content p:has(mjx-container[display="true"]),
-.post-content p:has(.MathJax[display="true"]) {
+.post-content p:has(.katex-display) {
+  text-align: center !important;
   text-indent: 0 !important;
 }
+
+/* ✅ MathJax v2 (旧版) */
 .MathJax {
   max-width: 80vw;
+  display: block;
+  text-align: center;
   margin: 1.2em auto;
+  font-size: 1rem;
+}
+
+/* ✅ MathJax v3 — 块级公式（居中显示） */
+.post-content mjx-container[display="true"],
+.post-content .MathJax[display="true"] {
+  display: block !important;
+  text-align: center !important;
+  margin: 1.2em auto !important;
+  line-height: normal !important;
+}
+
+/* ✅ 仅块级公式所在段落去掉缩进 */
+.post-content p:has(mjx-container[display="true"]),
+.post-content p:has(.MathJax[display="true"]) {
+  text-align: center !important;
+  text-indent: 0 !important;
+}
+
+/* ✅ 行内公式保持原状（不居中） */
+.post-content mjx-container[display="false"],
+.post-content .MathJax[display="false"] {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin: 0 0.25em;
+  line-height: normal !important;
 }
 
 /* =========================
