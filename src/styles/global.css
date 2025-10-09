@@ -190,3 +190,59 @@ mjx-container[jax="CHTML"][display="false"] {
     text-align: center !important;
     text-indent: 0 !important;
 }
+
+/* =========================
+   标题层级样式（h1~h6）
+   ========================= */
+.post-content h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin: 2em 0 1em;
+    color: #222;
+}
+
+.post-content h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 1.8em 0 0.9em;
+    color: #333;
+}
+
+.post-content h3 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 1.6em 0 0.8em;
+    color: #444;
+}
+
+.post-content h4 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 1.4em 0 0.7em;
+    color: #555;
+}
+
+.post-content h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 1.2em 0 0.6em;
+    color: #666;
+    border-left: 3px solid #a67ef8; /* 粉紫主题边条 */
+    padding-left: 0.6em;
+}
+
+.post-content h6 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 1em 0 0.5em;
+    color: #777;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+    line-height: 1.4;
+}
