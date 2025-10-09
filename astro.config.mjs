@@ -8,16 +8,21 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-    integrations: [tailwind(), react()],
-    markdown: {
-        shikiConfig: {
-            theme: 'one-dark-pro',
-        },
-        remarkPlugins: [remarkMath],
-        rehypePlugins: [rehypeMathjax],
+  site: "https://luoyuxuanryan.pages.dev",
+
+  integrations: [tailwind(), react()],
+
+  markdown: {
+    syntaxHighlight: 'shiki', // ✅ 启用 Shiki 高亮
+    shikiConfig: {
+      theme: 'one-dark-pro',
+      wrap: true,
     },
-    image: {
-        service: passthroughImageService(),
-    },
-    site: "https://luoyuxuanryan.pages.dev"
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeMathjax], // ✅ 使用 MathJax
+  },
+
+  image: {
+    service: passthroughImageService(),
+  },
 });
