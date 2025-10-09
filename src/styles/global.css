@@ -156,7 +156,7 @@ code {
   text-indent: 0 !important;
 }
 
-/* ✅ MathJax v2 (旧版) */
+/* ✅ MathJax v2 兼容 */
 .MathJax,
 .MathJax_SVG_Display {
   max-width: 80vw;
@@ -166,7 +166,7 @@ code {
   font-size: 1rem;
 }
 
-/* ✅ MathJax v3 — CHTML 模式（块级） */
+/* ✅ MathJax v3 CHTML 或 SVG 模式（块级） */
 .post-content mjx-container[display="true"],
 .post-content .MathJax[display="true"] {
   display: block !important;
@@ -175,33 +175,19 @@ code {
   line-height: normal !important;
 }
 
-/* ✅ MathJax v3 — SVG 模式（块级，适配你当前输出） */
-.post-content p > svg[data-mml-node="math"],
-.post-content div > svg[data-mml-node="math"],
-.post-content .MathJax_SVG_Display > svg[data-mml-node="math"] {
-  display: block !important;
-  margin: 1.2em auto !important;
-  text-align: center !important;
-  /* 不要在块级元素上加 vertical-align，避免编辑器警告 */
-}
-
-/* ✅ MathJax v3 — SVG 模式（行内） */
-.post-content span > svg[data-mml-node="math"],
-.post-content li > svg[data-mml-node="math"],
-.post-content strong > svg[data-mml-node="math"],
-.post-content em > svg[data-mml-node="math"] {
+/* ✅ MathJax v3 行内公式 */
+.post-content mjx-container:not([display]),
+.post-content mjx-container[display="false"] {
   display: inline-block !important;
-  vertical-align: middle !important; /* 行内可保留，如需严格基线对齐可删 */
+  vertical-align: middle !important;
   margin: 0 0.25em;
   text-align: inherit !important;
   line-height: normal !important;
 }
 
-/* ✅ 含块级公式的段落去掉缩进并居中 */
+/* ✅ 块级公式所在段落去掉缩进并居中 */
 .post-content p:has(mjx-container[display="true"]),
-.post-content p:has(.MathJax[display="true"]),
-.post-content p:has(.MathJax_SVG_Display),
-.post-content p:has(> svg[data-mml-node="math"]) {
+.post-content p:has(.MathJax[display="true"]) {
   text-align: center !important;
   text-indent: 0 !important;
 }
