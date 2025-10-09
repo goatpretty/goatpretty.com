@@ -44,44 +44,37 @@ body {
 }
 
 /* =========================
-   内联代码（行内）
+   内联代码
    ========================= */
 :root {
   --code-bg-color-light: #f6f8fa;
   --code-bg-color-dark: #333;
 }
 
-/* ✅ 仅限行内代码 */
-:not(pre) > code {
+code {
   border: 1px solid #ddd;
   border-radius: 0.2rem;
   padding: 0.15rem 0.35rem;
   background-color: var(--code-bg-color-light);
   font-family: "Maple Mono NF CN", Consolas, monospace !important;
   font-size: 0.95em;
-  color: #c7254e;
 }
 
-/* ✅ 代码块由 Shiki 控制，不干扰它 */
 .astro-code code {
   border: none !important;
-  background: transparent !important;
-  color: inherit !important;
+  background: none !important;
 }
 
-/* ✅ 暗色模式下行内代码 */
 @media (prefers-color-scheme: dark) {
   body {
     color: #ddd;
     background-color: #1e1e1e;
   }
-  :not(pre) > code {
+  code {
     background-color: var(--code-bg-color-dark);
     border-color: #444;
-    color: #ffb86c;
   }
 }
-
 
 /* =========================
    正文样式
