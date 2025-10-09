@@ -7,114 +7,124 @@ import Navigation from '../../layout/navigation.astro';
 import GoBackToTop from '../../components/goBackToTop.astro';
 
 export async function getStaticPaths() {
-    const blogEntries = await getCollection('posts');
-    return blogEntries.map((entry) => ({
-        params: { id: entry.id },
-        props: { entry },
-    }));
+  const blogEntries = await getCollection('posts');
+  return blogEntries.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
 }
 
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 ---
 
-<html lang='en'>
-    <head>
-        <meta charset='utf-8' />
-        <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-        <meta name='viewport' content='width=device-width' />
-        <meta name='generator' content={Astro.generator} />
-        <title>GoatPretty's Blog</title>
-    </head>
-    <body>
-        <Post>
-            <Navigation slot='header' />
-            
-            <!-- ✅ 正文外层加 post-content，保证缩进 CSS 命中 -->
-            <div class="post-content" slot="article">
-                <Prose>
-                    <Content />
-                </Prose>
-            </div>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>GoatPretty's Blog</title>
+  </head>
 
-            <!-- 📌 左侧目录（不编号，仅层级缩进） -->
-            
-            <div slot="headings" class="w-11/12 space-y-1">
-                {
-                    headings.map((heading) => (
-                        <a
-                            class={`block font-bold text-profileTextLight dark:text-profileTextDark
-                                    hover:bg-bgLight dark:hover:bg-bgDark
-                                    rounded-md w-full px-2 py-1 break-words leading-snug
-                                    ${heading.depth === 1 ? 'text-lg mt-1' : ''}
-                                    ${heading.depth === 2 ? 'pl-2 text-base' : ''}
-                                    ${heading.depth === 3 ? 'pl-4 text-sm' : ''}
-                                    ${heading.depth === 4 ? 'pl-6 text-sm opacity-90' : ''}`}
-                            href={`#${heading.slug}`}
-                        >
-                            {heading.text}
-                        </a>
-                    ))
-                }
-            </div>
-        </Post>
-        <GoBackToTop />
-    </body>
+  <body>
+    <Post>
+      <Navigation slot="header" />
+
+      <!-- ✅ 正文外层加 post-content，保证缩进 CSS 命中 -->
+      <div class="post-content" slot="article">
+        <Prose>
+          <Content />
+        </Prose>
+      </div>
+
+      <!-- ✅ 左侧目录（自动缩进，无编号） -->
+      <div slot="headings" class="toc w-11/12 space-y-1">
+        {
+          headings.map((heading) => (
+            <a
+              class="toc-item block font-bold rounded-md w-full px-2 py-1 break-words leading-snug"
+              style={`--depth:${heading.depth};`}
+              href={`#${heading.slug}`}
+            >
+              {heading.text}
+            </a>
+          ))
+        }
+      </div>
+    </Post>
+
+    <GoBackToTop />
+  </body>
 </html>
 
+<style>
+  /* 目录缩进：根据 --depth 计算左边距 */
+  .toc-item { margin-left: calc((var(--depth, 1) - 1) * 1rem); }
+</style>
+
 <script>
-    let copyButtonLabel = 'Copy';
-    let codeBlocks = Array.from(document.querySelectorAll('pre'));
+  document.addEventListener('DOMContentLoaded', () => {
+    setupCopyButtons();
+    setupSmoothAnchors();
+  });
 
-    for (let codeBlock of codeBlocks) {
-        let wrapper = document.createElement('div');
-        wrapper.style.position = 'relative';
-        let copyButton = document.createElement('button');
-        copyButton.className = 'copy-code cursor-copy';
-        copyButton.innerHTML = copyButtonLabel;
-        copyButton.style.position = 'absolute';
-        copyButton.style.right = '10px';
-        copyButton.style.top = '3px';
+  // 代码块复制按钮（无形参函数，彻底规避 TS7006）
+  function setupCopyButtons() {
+    const codeBlocks = document.querySelectorAll('pre');
+    const copyButtonLabel = 'Copy';
 
-        codeBlock.setAttribute('tabindex', '0');
-        codeBlock.appendChild(copyButton);
+    codeBlocks.forEach((codeBlock) => {
+      const wrapper = document.createElement('div');
+      wrapper.style.position = 'relative';
 
-        codeBlock.parentNode!.insertBefore(wrapper, codeBlock);
+      const copyButton = document.createElement('button');
+      copyButton.className = 'copy-code cursor-copy';
+      copyButton.textContent = copyButtonLabel;
+      copyButton.style.position = 'absolute';
+      copyButton.style.right = '10px';
+      copyButton.style.top = '3px';
+
+      codeBlock.setAttribute('tabindex', '0');
+      codeBlock.appendChild(copyButton);
+
+      // 父节点空值保护
+      if (codeBlock.parentNode) {
+        codeBlock.parentNode.insertBefore(wrapper, codeBlock);
         wrapper.appendChild(codeBlock);
+      }
 
-        copyButton.addEventListener('click', async () => {
-            await copyCode(codeBlock, copyButton);
-        });
-    }
-
-    // ✅ 带类型定义，避免 TS 7006 报错
-    async function copyCode(block: HTMLElement, button: HTMLButtonElement) {
-        let code = block.querySelector('code');
-        let text = code?.innerText || '';
-
-        await navigator.clipboard.writeText(text);
-        button.innerText = 'Copied';
-
-        setTimeout(() => {
-            button.innerText = copyButtonLabel;
-        }, 1000);
-    }
-
-    // ✅ 平滑滚动目录跳转
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll("a[href^='#']").forEach((anchor) => {
-            anchor.addEventListener('click', function (event) {
-                event.preventDefault();
-                const targetId = anchor.getAttribute('href')!.substring(1);
-                const targetElement = document.getElementById(targetId);
-
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start',
-                    });
-                }
-            });
-        });
+      // 用闭包直接捕获 codeBlock / copyButton，不再有参数
+      copyButton.addEventListener('click', async () => {
+        const code = codeBlock.querySelector('code');
+        const text = (code && code.textContent) ? code.textContent : '';
+        try {
+          await navigator.clipboard.writeText(text);
+          copyButton.textContent = 'Copied';
+          setTimeout(() => { copyButton.textContent = copyButtonLabel; }, 1000);
+        } catch {
+          // 可选：失败时提示
+          copyButton.textContent = 'Failed';
+          setTimeout(() => { copyButton.textContent = copyButtonLabel; }, 1000);
+        }
+      });
     });
+  }
+
+  // 平滑滚动目录跳转
+  function setupSmoothAnchors() {
+    const anchors = document.querySelectorAll("a[href^='#']");
+    anchors.forEach((anchor) => {
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = anchor.getAttribute('href');
+        if (!href) return;
+        const targetId = href.slice(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  }
 </script>
