@@ -7,6 +7,7 @@ const { frontmatter, Content } = Astro.props;
 <html lang="zh-cn">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{frontmatter.title}</title>
 
     <!-- ✅ 全局样式 -->
@@ -15,6 +16,11 @@ const { frontmatter, Content } = Astro.props;
     <!-- ✅ 如果 frontmatter 指定了 customStyle，就单独加载 -->
     {frontmatter.customStyle && (
       <link rel="stylesheet" href={frontmatter.customStyle} />
+    )}
+
+    <!-- ✅ 自动插入描述信息（SEO 友好） -->
+    {frontmatter.description && (
+      <meta name="description" content={frontmatter.description} />
     )}
   </head>
 
@@ -48,6 +54,7 @@ const { frontmatter, Content } = Astro.props;
   padding: 2rem 1rem;
 }
 
+/* 标题：保持全局一致 */
 .post-title {
   font-size: 2.2rem;
   margin: 0 0 0.5rem;
@@ -55,6 +62,7 @@ const { frontmatter, Content } = Astro.props;
   text-align: center;
 }
 
+/* 发布日期 */
 .post-meta {
   color: #888;
   font-size: 0.9rem;
@@ -63,6 +71,7 @@ const { frontmatter, Content } = Astro.props;
   text-indent: 0; /* 不缩进 */
 }
 
+/* 简介文字 */
 .post-description {
   font-size: 1.1rem;
   text-align: center;
@@ -71,8 +80,10 @@ const { frontmatter, Content } = Astro.props;
   text-indent: 0; /* 不缩进 */
 }
 
+/* 正文样式基础 */
 .post-content {
   font-size: 1rem;
   line-height: 1.8;
+  color: #222;
 }
 </style>
