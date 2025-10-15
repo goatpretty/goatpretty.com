@@ -93,6 +93,19 @@ code {
   margin: 0 0 1.2em 0;
 }
 
+/* ✅ 不缩进类（支持 <p> 和 <div>） */
+.post-content .no-indent {
+  text-indent: 0 !important;
+  margin-left: 0 !important;
+  text-align: left !important;
+}
+.post-content .no-indent p,
+.post-content .no-indent strong,
+.post-content .no-indent em,
+.post-content .no-indent code {
+  text-indent: 0 !important;
+}
+
 /* 🚫 标题、列表、代码块等不缩进 */
 .post-content h1,
 .post-content h2,
