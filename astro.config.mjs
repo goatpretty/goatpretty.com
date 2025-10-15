@@ -2,38 +2,40 @@
 import { defineConfig, passthroughImageService } from 'astro/config';
 import remarkMath from 'remark-math';
 import rehypeMathjax from 'rehype-mathjax';
-import rehypeRaw from 'rehype-raw'; // ✅ 新增：允许 Markdown 中嵌入原生 HTML
+import rehypeRaw from 'rehype-raw'; // ✅ 允许 Markdown 中使用原生 HTML
 
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://goatpretty.com",
+  site: 'https://goatpretty.com',
 
+  // ✅ 启用 Tailwind 与 React
   integrations: [tailwind(), react()],
 
+  // ✅ Markdown 配置
   markdown: {
-    syntaxHighlight: 'shiki', // ✅ 启用 Shiki 高亮
+    syntaxHighlight: 'shiki', // 使用 Shiki 语法高亮
     shikiConfig: {
       theme: 'one-dark-pro',
       wrap: true,
     },
 
-    // ✅ 数学公式
+    // ✅ 数学公式插件（remark 阶段）
     remarkPlugins: [remarkMath],
 
-    // ✅ rehype-raw 必须放在 MathJax 之前
+    // ✅ rehype 插件顺序很关键
     rehypePlugins: [
-      rehypeRaw,     // 允许在 Markdown 中写原生 HTML（如 <div>）
-      rehypeMathjax, // 数学公式渲染
+      rehypeRaw,     // 必须放在最前：解析 Markdown 中的原生 HTML
+      rehypeMathjax, // 之后渲染 MathJax 公式
     ],
 
-    // ✅ 让 remark 可以安全传递 HTML 内容到 rehype
+    // ✅ 允许 remark → rehype 传递 HTML
     remarkRehype: { allowDangerousHtml: true },
   },
 
-  // ✅ 图片透传（支持 public 文件夹内图片）
+  // ✅ 图片透传，确保 public/ 下的资源可用
   image: {
     service: passthroughImageService(),
   },
