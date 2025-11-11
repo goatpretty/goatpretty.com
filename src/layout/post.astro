@@ -3,6 +3,26 @@ import * as motion from 'motion/react-client';
 import FriendLink from '../components/friendLink.astro';
 import '../styles/mathjax.css';
 import '../styles/global.css';
+
+import fs from "fs";
+import path from "path";
+
+// 自动获取当前文章 Markdown 文件的最后修改时间
+let lastUpdated = "";
+try {
+  // 例如 /posts/党史随笔1/ → ./src/data/posts/党史随笔1.md
+  const slugPath = Astro.url.pathname.replace(/\/$/, "").split("/").pop();
+  const filePath = path.resolve(`./src/data/posts/${slugPath}.md`);
+
+  const stats = fs.statSync(filePath);
+  const date = new Date(stats.mtime);
+
+  // 格式化成 yyyy-MM-dd HH:mm
+  lastUpdated = date.toISOString().slice(0, 16).replace("T", " ");
+} catch (err) {
+  console.warn("无法获取最后更新时间:", (err as any).message);
+  lastUpdated = ""; // 未取到则设为空，后续自动隐藏
+}
 ---
 
 <div class="bg-bodyLight dark:bg-bodyDark flex flex-col overflow-hidden h-screen">
@@ -14,9 +34,7 @@ import '../styles/global.css';
         client:load
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{
-          duration: 0.4,
-        }}
+        transition={{ duration: 0.4 }}
       >        
         <div
           class="bg-foilLight dark:bg-foilDark flex flex-col items-center
@@ -48,13 +66,23 @@ import '../styles/global.css';
         <!-- 文章内容 -->
         <slot name="article" />
 
-        <!-- 👁️ 阅读次数显示 -->
-        <div
-          id="view-counter"
-          class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-6 select-none"
-        >
-        正在统计阅读次数...
-        </div>
+        <!-- 更新时间 + 阅读次数 -->
+        {lastUpdated && (
+          <div
+            class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-6 select-none"
+          >
+            最后更新时间 {lastUpdated}　
+            <span id="view-counter">阅读统计加载中...</span>
+          </div>
+        )}
+
+        {!lastUpdated && (
+          <div
+            class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-6 select-none"
+          >
+            <span id="view-counter">阅读统计加载中...</span>
+          </div>
+        )}
       </motion.div>
     </div>
 
@@ -67,7 +95,7 @@ import '../styles/global.css';
   </main>
 </div>
 
-<!-- 👇 阅读次数统计脚本（关闭 TS 类型检查） -->
+<!-- 阅读次数统计脚本（关闭 TS 类型检查） -->
 <script lang="ts">
 // @ts-nocheck  ← 添加这一行彻底关闭类型检查
 
@@ -89,7 +117,7 @@ if (slug) {
     if (el) el.textContent = '阅读统计加载失败';
   };
 
-  // ✅ 防止 24 小时内重复计数
+  // 防止 24 小时内重复计数
   if (!lastViewTime || now - Number(lastViewTime) > 24 * 60 * 60 * 1000) {
     fetch(`/views/${slug}`)
       .then((res) => res.json())
