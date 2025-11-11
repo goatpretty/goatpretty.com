@@ -1,32 +1,11 @@
 ---
-import FriendLink from "../components/friendLink.astro";
-import "../styles/mathjax.css";
-import "../styles/global.css";
+import * as motion from 'motion/react-client';
+import FriendLink from '../components/friendLink.astro';
+import '../styles/mathjax.css';
+import '../styles/global.css';
 
-/** 自动获取当前文章 Markdown 文件的最后修改时间（兼容 Cloudflare Pages，无 fs/path） */
-let lastUpdated: string = "";
-
-try {
-  // 枚举 posts 目录下所有 .md
-  const posts = Object.keys(import.meta.glob("../data/posts/*.md"));
-  // 当前路由最后一段作为 slug
-  const slugPath = Astro.url.pathname.replace(/\/$/, "").split("/").pop();
-
-  // 匹配对应的 md 文件
-  const matchedFile = posts.find((p) => p.endsWith(`${slugPath}.md`));
-  if (matchedFile) {
-    // 通过模块 URL 读取资源头部的 last-modified
-    const fileUrl = new URL(matchedFile, import.meta.url);
-    const res = await fetch(fileUrl);
-    const lastModified = res.headers.get("last-modified");
-    if (lastModified) {
-      const d = new Date(lastModified);
-      lastUpdated = d.toISOString().slice(0, 16).replace("T", " ");
-    }
-  }
-} catch {
-  lastUpdated = "";
-}
+// ✅ 从 Markdown frontmatter 中获取 lastUpdated
+const { lastUpdated } = Astro.props;
 ---
 
 <div class="bg-bodyLight dark:bg-bodyDark flex flex-col overflow-hidden h-screen">
@@ -34,15 +13,24 @@ try {
   <main class="flex flex-1">
     <!-- 左侧目录 -->
     <div class="bg-bgLight dark:bg-bgDark hidden md:flex flex-auto flex-col w-3/12 pl-16">
-      <div
-        class="bg-foilLight dark:bg-foilDark flex flex-col items-center
-        mt-2 md:ml-2 md:mr-3 ml-3 mr-3 pt-2 pb-3 rounded-2xl
-        transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
-      >
-        <slot name="headings" />
-      </div>
+      <motion.div
+        client:load
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{
+          duration: 0.4,
+        }}
+      >        
+        <div
+          class="bg-foilLight dark:bg-foilDark flex flex-col items-center
+         mt-2 md:ml-2 md:mr-3 ml-3 mr-3 pt-2 pb-3 rounded-2xl
+         transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
+        >
+         <slot name="headings" />
+        </div>
 
-      <FriendLink />
+        <FriendLink />
+      </motion.div>
     </div>
 
     <!-- 主体内容 -->
@@ -51,28 +39,35 @@ try {
       id="main-content"
       style="height: calc(100vh - 4rem)"
     >
-      <div>
+
+      <motion.div
+        client:load
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{
+          duration: 0.4,
+        }}
+      >
         <!-- 文章内容 -->
         <slot name="article" />
 
-        <!-- 更新时间 + 阅读次数 -->
+        <!-- 🕓 最后更新时间（来自 frontmatter） -->
         {lastUpdated && (
           <div
             class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-6 select-none"
           >
-            最后更新时间 {lastUpdated}　
-            <span id="view-counter">阅读统计加载中...</span>
+            最后更新时间 {lastUpdated}
           </div>
         )}
 
-        {!lastUpdated && (
-          <div
-            class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-6 select-none"
-          >
-            <span id="view-counter">阅读统计加载中...</span>
-          </div>
-        )}
-      </div>
+        <!-- 👁️ 阅读次数显示 -->
+        <div
+          id="view-counter"
+          class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-2 select-none"
+        >
+          正在统计阅读次数...
+        </div>
+      </motion.div>
     </div>
 
     <!-- 右侧留白 -->
@@ -84,9 +79,10 @@ try {
   </main>
 </div>
 
-<!-- 阅读次数统计脚本（仅此处关闭 TS 检查，避免 VS Code 误报） -->
-<script lang="ts" is:inline>
+<!-- 👇 阅读次数统计脚本（关闭 TS 类型检查） -->
+<script lang="ts">
 // @ts-nocheck
+
 const pathParts = window.location.pathname.split('/');
 const slug = pathParts.filter(Boolean).pop();
 
@@ -105,7 +101,7 @@ if (slug) {
     if (el) el.textContent = '阅读统计加载失败';
   };
 
-  // 防止 24 小时内重复计数
+  // ✅ 防止 24 小时内重复计数
   if (!lastViewTime || now - Number(lastViewTime) > 24 * 60 * 60 * 1000) {
     fetch(`/views/${slug}`)
       .then((res) => res.json())
