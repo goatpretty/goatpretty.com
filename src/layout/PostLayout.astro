@@ -3,7 +3,6 @@ import "../styles/global.css";
 
 const { frontmatter, Content } = Astro.props;
 ---
-
 <html lang="zh-cn">
   <head>
     <meta charset="UTF-8" />
@@ -43,7 +42,59 @@ const { frontmatter, Content } = Astro.props;
       <div class="post-content">
         <Content />
       </div>
+
+      <!-- ✅ 新增：最后更新时间 + 阅读次数 -->
+      <div
+        id="meta-info"
+        class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-6 select-none"
+      >
+        {frontmatter.lastUpdated && <>最后更新时间 {frontmatter.lastUpdated}　</>}
+        <span id="view-counter">正在统计阅读次数...</span>
+      </div>
     </article>
+
+    <!-- ✅ 阅读次数脚本 -->
+    <script is:inline>
+    // @ts-nocheck
+    const pathParts = window.location.pathname.split('/');
+    const slug = pathParts.filter(Boolean).pop();
+
+    if (slug) {
+      const lastViewKey = `viewed_${slug}`;
+      const lastViewTime = localStorage.getItem(lastViewKey);
+      const now = Date.now();
+
+      const updateCounter = (views) => {
+        const el = document.getElementById('view-counter');
+        if (el) el.textContent = `阅读 ${views} 次`;
+      };
+
+      const showError = () => {
+        const el = document.getElementById('view-counter');
+        if (el) el.textContent = '阅读统计加载失败';
+      };
+
+      if (!lastViewTime || now - Number(lastViewTime) > 24 * 60 * 60 * 1000) {
+        fetch(`/views/${slug}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data && typeof data.views === 'number') {
+              updateCounter(data.views);
+              localStorage.setItem(lastViewKey, now.toString());
+            } else showError();
+          })
+          .catch(showError);
+      } else {
+        fetch(`/views/${slug}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data && typeof data.views === 'number') updateCounter(data.views);
+            else showError();
+          })
+          .catch(showError);
+      }
+    }
+    </script>
   </body>
 </html>
 
