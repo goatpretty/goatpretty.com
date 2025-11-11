@@ -4,7 +4,7 @@ import FriendLink from '../components/friendLink.astro';
 import '../styles/mathjax.css';
 import '../styles/global.css';
 
-// ✅ 从 Markdown frontmatter 中获取 lastUpdated
+// ✅ 从 Markdown frontmatter 获取 lastUpdated
 const { lastUpdated } = Astro.props;
 ---
 
@@ -17,16 +17,14 @@ const { lastUpdated } = Astro.props;
         client:load
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{
-          duration: 0.4,
-        }}
+        transition={{ duration: 0.4 }}
       >        
         <div
           class="bg-foilLight dark:bg-foilDark flex flex-col items-center
          mt-2 md:ml-2 md:mr-3 ml-3 mr-3 pt-2 pb-3 rounded-2xl
          transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
         >
-         <slot name="headings" />
+          <slot name="headings" />
         </div>
 
         <FriendLink />
@@ -44,28 +42,24 @@ const { lastUpdated } = Astro.props;
         client:load
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{
-          duration: 0.4,
-        }}
+        transition={{ duration: 0.4 }}
       >
         <!-- 文章内容 -->
         <slot name="article" />
 
-        <!-- 🕓 最后更新时间（来自 frontmatter） -->
-        {lastUpdated && (
-          <div
-            class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-6 select-none"
-          >
-            最后更新时间 {lastUpdated}
-          </div>
-        )}
-
-        <!-- 👁️ 阅读次数显示 -->
+        <!-- 🕓 最后更新时间 + 👁️ 阅读次数 -->
         <div
-          id="view-counter"
-          class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-2 select-none"
+          id="meta-info"
+          class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-6 select-none"
         >
-          正在统计阅读次数...
+          {lastUpdated ? (
+            <>
+              最后更新时间 {lastUpdated}　
+              <span id="view-counter">正在统计阅读次数...</span>
+            </>
+          ) : (
+            <span id="view-counter">正在统计阅读次数...</span>
+          )}
         </div>
       </motion.div>
     </div>
@@ -79,7 +73,7 @@ const { lastUpdated } = Astro.props;
   </main>
 </div>
 
-<!-- 👇 阅读次数统计脚本（关闭 TS 类型检查） -->
+<!-- 👇 阅读次数统计脚本 -->
 <script lang="ts">
 // @ts-nocheck
 
