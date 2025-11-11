@@ -4,24 +4,26 @@ import FriendLink from '../components/friendLink.astro';
 import '../styles/mathjax.css';
 import '../styles/global.css';
 
-import fs from "fs";
-import path from "path";
-
-// 自动获取当前文章 Markdown 文件的最后修改时间
+// 自动获取当前文章 Markdown 文件的最后修改时间（仅在 SSR 阶段执行）
 let lastUpdated = "";
-try {
-  // 例如 /posts/党史随笔1/ → ./src/data/posts/党史随笔1.md
-  const slugPath = Astro.url.pathname.replace(/\/$/, "").split("/").pop();
-  const filePath = path.resolve(`./src/data/posts/${slugPath}.md`);
+if (import.meta.env.SSR) {
+  const fs = await import("fs");
+  const path = await import("path");
 
-  const stats = fs.statSync(filePath);
-  const date = new Date(stats.mtime);
+  try {
+    // 例如 /posts/党史随笔1/ → ./src/data/posts/党史随笔1.md
+    const slugPath = Astro.url.pathname.replace(/\/$/, "").split("/").pop();
+    const filePath = path.resolve(`./src/data/posts/${slugPath}.md`);
 
-  // 格式化成 yyyy-MM-dd HH:mm
-  lastUpdated = date.toISOString().slice(0, 16).replace("T", " ");
-} catch (err) {
-  console.warn("无法获取最后更新时间:", (err as any).message);
-  lastUpdated = ""; // 未取到则设为空，后续自动隐藏
+    const stats = fs.statSync(filePath);
+    const date = new Date(stats.mtime);
+
+    // 格式化成 yyyy-MM-dd HH:mm
+    lastUpdated = date.toISOString().slice(0, 16).replace("T", " ");
+  } catch (err) {
+    console.warn("无法获取最后更新时间:", (err as any)?.message ?? err);
+    lastUpdated = ""; // 未取到则设为空，后续自动隐藏
+  }
 }
 ---
 
