@@ -1,0 +1,152 @@
+/* =========================================================
+   专属样式：党史随笔（dangshi-suibi）
+   放置位置：public/styles/dangshi.css
+   加载方式：在文章 frontmatter 中写
+     customStyle: '/styles/dangshi.css'
+   ---------------------------------------------------------
+   ✅ 作用范围：仅限 .post-content（正文区域）
+   ✅ 不影响标题、全局布局
+   ✅ 红色系风格 + 思源宋体，更正式、更庄重
+   ========================================================= */
+
+/* ===============================
+   正文整体
+   =============================== */
+.post-content {
+  font-family: "Source Han Serif SC", "思源宋体", "SimSun", "宋体",
+    "Noto Serif SC", "Times New Roman", serif;
+  font-size: 1.06rem;
+  line-height: 2;
+  color: #2a2a2a;
+  letter-spacing: 0.3px;
+}
+
+/* ===============================
+   段落
+   =============================== */
+.post-content p {
+  text-indent: 2em;
+  color: #2c1a1a; /* 深棕红，沉稳温暖 */
+  margin: 0 0 1.2em 0;
+}
+
+/* ===============================
+   小标题（H2~H4）
+   =============================== */
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  color: #b22222; /* 深红 */
+  font-family: "Source Han Serif SC", "思源宋体", "Noto Serif SC", serif;
+  font-weight: 600;
+  border-left: 4px solid #b22222;
+  padding-left: 0.5em;
+  margin-top: 1.8em;
+  margin-bottom: 0.8em;
+  line-height: 1.6;
+}
+
+/* ===============================
+   强调文字
+   =============================== */
+.post-content strong {
+  color: #c1121f; /* 鲜红 */
+  font-weight: 600;
+}
+
+/* ===============================
+   列表
+   =============================== */
+.post-content ul,
+.post-content ol {
+  color: #2b1a1a;
+  padding-left: 2em;
+}
+.post-content li {
+  margin: 0.4em 0;
+}
+
+/* ===============================
+   引用块
+   =============================== */
+.post-content blockquote {
+  border-left: 4px solid #b22222;
+  background: #fff8f8;
+  padding: 0.8em 1.2em;
+  color: #4a1e1e;
+  font-style: normal;
+  border-radius: 6px;
+  margin: 1.4em 0;
+}
+
+/* ===============================
+   图片（保留原中心对齐风格）
+   =============================== */
+.post-content img {
+  display: block;
+  margin: 1.5em auto;
+  border-radius: 0.6rem;
+  box-shadow: 0 2px 8px rgba(180, 40, 40, 0.1);
+  max-width: 100%;
+}
+
+/* ===============================
+   表格
+   =============================== */
+.post-content table {
+  border-collapse: collapse;
+  margin: 1.5em auto;
+  width: 95%;
+  font-size: 0.95rem;
+}
+.post-content th,
+.post-content td {
+  border: 1px solid #d99;
+  padding: 0.4em 0.8em;
+}
+.post-content th {
+  background-color: #fff5f5;
+  color: #8b0000;
+}
+
+/* ===============================
+   代码块
+   =============================== */
+.post-content pre {
+  background-color: #faf6f6;
+  border-left: 4px solid #c1121f;
+  border-radius: 0.5rem;
+  padding: 1em 1.2em;
+  overflow-x: auto;
+}
+.post-content code {
+  font-family: "Maple Mono NF CN", Consolas, monospace;
+  color: #a22;
+}
+
+/* ===============================
+   超链接
+   =============================== */
+.post-content a {
+  color: #b22222;
+  text-decoration: underline dotted;
+  transition: color 0.2s ease;
+}
+.post-content a:hover {
+  color: #d62727;
+  text-decoration: underline solid;
+}
+
+/* ===============================
+   额外微调（表格和公式）
+   =============================== */
+/* 表格标题行字体略加粗 */
+.post-content thead th {
+  font-weight: 700;
+}
+
+/* 避免影响 MathJax/KaTeX 公式颜色 */
+.post-content mjx-container,
+.post-content .katex {
+  color: inherit;
+}
