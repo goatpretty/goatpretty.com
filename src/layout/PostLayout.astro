@@ -3,23 +3,24 @@ import "../styles/global.css";
 
 const { frontmatter, Content } = Astro.props;
 ---
+
 <html lang="zh-cn">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{frontmatter.title}</title>
 
-    <!-- ✅ 全局样式 -->
-    <link rel="stylesheet" href="../styles/global.css" />
+    <!-- 全局样式 -->
+    <link rel="stylesheet" href="/styles/global.css" />
 
-    <!-- ✅ 如果 frontmatter 指定了 customStyle，就单独加载 -->
+    <!-- 党史随笔 / 自定义样式：放在 global.css 之后，使其能够覆盖 -->
     {frontmatter.customStyle && (
       <link rel="stylesheet" href={frontmatter.customStyle} />
     )}
 
-    <!-- ✅ 自动插入描述信息（SEO 友好） -->
+    <!-- SEO -->
     {frontmatter.description && (
-      <meta name="description" content={frontmatter.description} />
+     <meta name="description" content={frontmatter.description} />
     )}
   </head>
 
@@ -39,11 +40,12 @@ const { frontmatter, Content } = Astro.props;
         <p class="post-description">{frontmatter.description}</p>
       )}
 
-      <div class="post-content">
+      <!-- 文章内容（党史随笔自动加 .dangshi class） -->
+      <div class={`post-content ${frontmatter.customStyle ? 'dangshi' : ''}`}>
         <Content />
       </div>
 
-      <!-- ✅ 新增：最后更新时间 + 阅读次数 -->
+      <!-- 最后更新时间 + 阅读次数 -->
       <div
         id="meta-info"
         class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-6 select-none"
@@ -53,7 +55,7 @@ const { frontmatter, Content } = Astro.props;
       </div>
     </article>
 
-    <!-- ✅ 阅读次数脚本 -->
+    <!-- 阅读次数脚本 -->
     <script is:inline>
     // @ts-nocheck
     const pathParts = window.location.pathname.split('/');
@@ -119,7 +121,7 @@ const { frontmatter, Content } = Astro.props;
   font-size: 0.9rem;
   text-align: center;
   margin: 0 0 1.5rem;
-  text-indent: 0; /* 不缩进 */
+  text-indent: 0;
 }
 
 /* 简介文字 */
@@ -128,13 +130,13 @@ const { frontmatter, Content } = Astro.props;
   text-align: center;
   color: #555;
   margin: 0 0 2rem;
-  text-indent: 0; /* 不缩进 */
+  text-indent: 0;
 }
 
-/* 正文样式基础 */
+/* 默认正文基础样式（不会覆盖 dangshi.css） */
 .post-content {
   font-size: 1rem;
   line-height: 1.8;
-  color: #222;
+  color: inherit; /* ⚠ 完全继承，不强制颜色 */
 }
 </style>
