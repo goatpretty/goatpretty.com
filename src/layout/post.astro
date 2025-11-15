@@ -90,8 +90,12 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
       style="height: calc(100vh - 4rem)"
     >
       <div class="slide-in-left">
-        <!-- 文章内容 -->
-        <slot name="article" />
+        
+
+        <!-- 文章内容（加上 dangshi class） -->
+        <div class="post-content dangshi">
+          <slot name="article" />
+        </div>
 
         <!-- 最后更新时间 + 阅读次数 -->
         <div
