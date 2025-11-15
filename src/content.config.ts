@@ -10,6 +10,12 @@ const posts = defineCollection({
         introText: z.string(),
         author: z.string(),
         publishDate: z.coerce.date(),
+
+        /** 允许自定义 CSS，如 /styles/dangshi.css */
+        customStyle: z.string().optional(),
+
+        /** 文章更新时间 */
+        lastUpdated: z.string().optional(),
     }),
 });
 
