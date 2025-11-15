@@ -1,11 +1,12 @@
 /* =========================================================
    专属样式：党史随笔（dangshi-suibi）
-   使用字体：正文 → 方正书宋（FZSSK）
+   目标：正文使用方正书宋，标题分层加强，深色模式适配
    ========================================================= */
 
-/* ================
-   方正书宋 FZSSK
-   ================ */
+/* ===============================
+   方正书宋：FZSSK.TTF
+   请放到：public/Fonts/FZSSK.TTF
+   =============================== */
 @font-face {
   font-family: 'FZShuSongK';
   src: url('/Fonts/FZSSK.TTF') format('truetype');
@@ -15,7 +16,7 @@
 }
 
 /* ===============================
-   正文整体（使用方正书宋）
+   正文整体
    =============================== */
 .post-content {
   font-family: 'FZShuSongK', 'Noto Serif SC', 'SimSun', serif;
@@ -25,29 +26,64 @@
   letter-spacing: 0.25px;
 }
 
-/* ===============================
-   段落（正文主要结构）
-   =============================== */
-.post-content p {
-  text-indent: 2em;
-  color: #2b1a1a;   /* 深棕红，温和不刺眼 */
-  margin: 0 0 1.25em 0;
+html.dark .post-content {
+  color: #e6e6e6;
 }
 
 /* ===============================
-   小标题 H2~H4（保留红色方块竖线）
+   段落
    =============================== */
-.post-content h2,
+.post-content p {
+  text-indent: 2em;
+  color: #2b1a1a;
+  margin: 0 0 1.25em 0;
+}
+
+html.dark .post-content p {
+  color: #dcdcdc;
+}
+
+/* ===============================
+   标题（H2 保留竖线；H3+ 不要竖线）
+   =============================== */
+
+/* —— H2：重点标题，左侧红条 —— */
+.post-content h2 {
+  color: #b22222;
+  font-family: 'Source Han Serif SC', 'Noto Serif SC', serif;
+  font-weight: 700;
+  border-left: 6px solid #b22222;
+  padding-left: 0.55em;
+  margin-top: 2.1em;
+  margin-bottom: 0.9em;
+  line-height: 1.55;
+}
+
+html.dark .post-content h2 {
+  color: #ffcccc;
+  border-left-color: #ff6b6b;
+}
+
+/* —— H3~H6：取消竖线，但保持红色 —— */
 .post-content h3,
-.post-content h4 {
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  color: #b22222;
   font-family: 'Source Han Serif SC', 'Noto Serif SC', serif;
   font-weight: 600;
-  color: #b22222;
-  border-left: 6px solid #b22222;  /* 方块竖线视觉更稳重 */
-  padding-left: 0.55em;
-  margin-top: 1.95em;
-  margin-bottom: 0.9em;
-  line-height: 1.6;
+  margin-top: 1.8em;
+  margin-bottom: 0.6em;
+  line-height: 1.55;
+  padding-left: 0;   /* 移除竖线的占位 */
+  border-left: none !important;
+}
+
+html.dark .post-content h3,
+html.dark .post-content h4,
+html.dark .post-content h5,
+html.dark .post-content h6 {
+  color: #ffb3b3;
 }
 
 /* ===============================
@@ -58,6 +94,10 @@
   font-weight: 700;
 }
 
+html.dark .post-content strong {
+  color: #ff8080;
+}
+
 /* ===============================
    列表
    =============================== */
@@ -66,8 +106,14 @@
   padding-left: 2.2em;
   color: #3a1e1e;
 }
+
 .post-content li {
   margin: 0.45em 0;
+}
+
+html.dark .post-content ul,
+html.dark .post-content ol {
+  color: #dcdcdc;
 }
 
 /* ===============================
@@ -80,6 +126,12 @@
   color: #4a1e1e;
   border-radius: 6px;
   margin: 1.5em 0;
+}
+
+html.dark .post-content blockquote {
+  background: #2a1a1a;
+  border-left-color: #ff6b6b;
+  color: #f0dcdc;
 }
 
 /* ===============================
@@ -102,15 +154,26 @@
   width: 96%;
   font-size: 0.97rem;
 }
+
 .post-content th,
 .post-content td {
   border: 1px solid #d99;
   padding: 0.5em 0.85em;
 }
+
 .post-content th {
   background-color: #fff5f5;
   color: #8b0000;
   font-weight: 700;
+}
+
+html.dark .post-content table th {
+  background: #2d1d1d;
+  color: #ffaaaa;
+  border-color: #773333;
+}
+html.dark .post-content table td {
+  border-color: #663333;
 }
 
 /* ===============================
@@ -123,9 +186,19 @@
   padding: 1em 1.3em;
   overflow-x: auto;
 }
+
 .post-content code {
   font-family: "Maple Mono NF CN", Consolas, monospace;
   color: #a22;
+}
+
+html.dark .post-content pre {
+  background: #2b1d1d;
+  border-left-color: #ff6b6b;
+}
+
+html.dark .post-content code {
+  color: #ff8888;
 }
 
 /* ===============================
@@ -136,105 +209,24 @@
   text-decoration: underline dotted;
   transition: color 0.2s ease;
 }
+
 .post-content a:hover {
   color: #d62727;
   text-decoration: underline solid;
 }
 
+html.dark .post-content a {
+  color: #ffa4a4;
+}
+
+html.dark .post-content a:hover {
+  color: #ffcccc;
+}
+
 /* ===============================
-   公式颜色保持与正文一致
+   公式颜色
    =============================== */
 .post-content mjx-container,
 .post-content .katex {
   color: inherit;
-}
-
-/* =========================================================
-   📜 纸张纹理背景（亮色 & 深色）
-   专用于：文章正文区域 (.post-content)
-   不影响全局布局
-   ========================================================= */
-
-/* -----------------------------
-   亮色模式：仿古纸张背景
-   ----------------------------- */
-.post-content {
-  background-color: #f7f3e8; /* 温和米黄色底色 */
-  padding: 2.2rem 2rem;
-  border-radius: 12px;
-  box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.8),
-    0 4px 20px rgba(0, 0, 0, 0.06);
-
-  /* 加入轻量纹理（SVG 噪点） */
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' fill='none'%3E%3Cg opacity='0.10'%3E%3Ccircle cx='10' cy='10' r='1.2' fill='%23999'/%3E%3Ccircle cx='60' cy='50' r='1' fill='%23999'/%3E%3Ccircle cx='120' cy='90' r='0.9' fill='%23999'/%3E%3Ccircle cx='30' cy='110' r='1.1' fill='%23999'/%3E%3Ccircle cx='90' cy='20' r='0.9' fill='%23999'/%3E%3C/g%3E%3C/svg%3E"),
-    linear-gradient(135deg, #faf6ec 0%, #f6f0df 100%);
-  background-size: 140px 140px, cover;
-}
-
-
-/* -----------------------------
-   暗色模式：深棕纸张纹理
-   ----------------------------- */
-html.dark .post-content {
-  background-color: #2b2520; /* 深棕羊皮纸底色 */
-  color: #e8e3da;
-
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg opacity='0.12'%3E%3Ccircle cx='12' cy='18' r='1.1' fill='%23a08f78'/%3E%3Ccircle cx='65' cy='40' r='1' fill='%23a08f78'/%3E%3Ccircle cx='118' cy='95' r='1.2' fill='%23a08f78'/%3E%3Ccircle cx='40' cy='120' r='1.1' fill='%23a08f78'/%3E%3Ccircle cx='95' cy='25' r='0.9' fill='%23a08f78'/%3E%3C/g%3E%3C/svg%3E"),
-    linear-gradient(135deg, #352f29 0%, #2b2520 100%);
-  background-size: 140px 140px, cover;
-
-  border-radius: 12px;
-  box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.04),
-    0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-/* 标题在暗色模式保持高对比度 */
-html.dark .post-content h2,
-html.dark .post-content h3,
-html.dark .post-content h4 {
-  color: #e97a7a;
-  border-left-color: #e97a7a;
-}
-
-/* 强调文字在暗色更柔和 */
-html.dark .post-content strong {
-  color: #ff9b9b;
-}
-
-/* 链接在暗色模式适配 */
-html.dark .post-content a {
-  color: #ff9b9b;
-}
-html.dark .post-content a:hover {
-  color: #ffbcbc;
-}
-
-/* 引用块暗色适配 */
-html.dark .post-content blockquote {
-  background-color: rgba(255, 230, 230, 0.08);
-  border-left-color: #e97a7a;
-  color: #e8e1d8;
-}
-
-/* 表格暗色优化 */
-html.dark .post-content th {
-  background-color: rgba(255, 200, 200, 0.1);
-  color: #f4b8b8;
-}
-html.dark .post-content td {
-  border-color: #a68282;
-  color: #e2d8cc;
-}
-
-/* 代码块暗色优化 */
-html.dark .post-content pre {
-  background-color: rgba(255, 240, 240, 0.06);
-  border-left-color: #e97a7a;
-}
-html.dark .post-content code {
-  color: #ffbaba;
 }

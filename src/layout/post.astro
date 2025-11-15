@@ -1,5 +1,4 @@
 ---
-import * as motion from 'motion/react-client';
 import FriendLink from '../components/friendLink.astro';
 import '../styles/mathjax.css';
 import '../styles/global.css';
@@ -33,22 +32,37 @@ html.dark .left-toc::-webkit-scrollbar-thumb {
 html.dark .left-toc::-webkit-scrollbar-thumb:hover {
   background: rgba(180,180,180,0.45);
 }
+
+/* ================================
+   纯 CSS 进场动画，替代 motion
+   ================================ */
+.slide-in-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: slide-in-left 0.4s ease-out forwards;
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 </style>
 
 <div class="bg-bodyLight dark:bg-bodyDark flex flex-col overflow-hidden h-screen">
   <slot name="header" />
   <main class="flex flex-1">
-    <!-- 左侧目录（已加入细线滚动条） -->
+    <!-- 左侧目录（已加入细线滚动条 + CSS 动画） -->
     <div
       class="bg-bgLight dark:bg-bgDark hidden md:flex flex-auto flex-col w-3/12 pl-16 left-toc overflow-y-auto"
       style="height: calc(100vh - 4rem)"
     >
-      <motion.div
-        client:load
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.4 }}
-      >
+      <div class="slide-in-left">
         <div
           class="bg-foilLight dark:bg-foilDark flex flex-col items-center
          mt-2 md:ml-2 md:mr-3 ml-3 mr-3 pt-2 pb-3 rounded-2xl
@@ -58,22 +72,16 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
         </div>
 
         <FriendLink />
-      </motion.div>
+      </div>
     </div>
 
-    <!-- 主体内容（优化：去掉底部滚动条，仅纵向滚动） -->
+    <!-- 主体内容（仅纵向滚动 + CSS 动画） -->
     <div
       class="flex-auto w-full md:w-8/12 ml-0.5 mr-0.5 overflow-y-auto overflow-x-hidden p-3 md:p-10 pb-16 md:pb-24"
       id="main-content"
       style="height: calc(100vh - 4rem)"
     >
-
-      <motion.div
-        client:load
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.4 }}
-      >
+      <div class="slide-in-left">
         <!-- 文章内容 -->
         <slot name="article" />
 
@@ -91,7 +99,7 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
             <span id="view-counter">正在统计阅读次数...</span>
           )}
         </div>
-      </motion.div>
+      </div>
     </div>
 
     <!-- 右侧留白 -->
