@@ -3,7 +3,7 @@
    ========================================================= */
 
 /* ===============================
-   思源宋体（存放在 /Fonts/SourceHanSerifSC-Bold.otf）
+   字体加载区（统一优化）
    =============================== */
 @font-face {
   font-family: 'SourceHanSerifSC';
@@ -12,9 +12,6 @@
   font-weight: 700;
 }
 
-/* ===============================
-   方正书宋：FZSSK.TTF（正文 & H5/H6）
-   =============================== */
 @font-face {
   font-family: 'FZShuSongK';
   src: url('/Fonts/FZSSK.TTF') format('truetype');
@@ -22,9 +19,6 @@
   font-weight: 400;
 }
 
-/* ===============================
-   方正黑体：FZHTK.TTF（H4）
-   =============================== */
 @font-face {
   font-family: 'FZHeiTiK';
   src: url('/Fonts/FZHTK.TTF') format('truetype');
@@ -32,9 +26,6 @@
   font-weight: 700;
 }
 
-/* ===============================
-   方正小标宋（H1）
-   =============================== */
 @font-face {
   font-family: 'FZXiaoBiaoSongK';
   src: url('/Fonts/FZXBSK.TTF') format('truetype');
@@ -42,18 +33,18 @@
   font-weight: 700;
 }
 
-/* ===============================
-   正文整体
-   =============================== */
+/* =========================================================
+   正文基础
+   ========================================================= */
+
 .post-content {
   font-family: 'FZShuSongK', 'Noto Serif SC', 'SimSun', serif;
   font-size: 1.08rem;
   line-height: 2.05;
   color: #2a2a2a;
-  letter-spacing: 0.25px;
+  letter-spacing: 0.28px;
 }
 
-/* 深色模式：正文变为纯浅灰白，不带红色 */
 html.dark .post-content {
   color: #f5f5f5 !important;
 }
@@ -64,46 +55,41 @@ html.dark .post-content {
 .post-content p {
   text-indent: 2em;
   color: #2b1a1a;
-  margin: 0 0 1.25em 0;
+  margin: 0 0 1.25em;
 }
 
 html.dark .post-content p {
-  color: #f5f5f5 !important;
+  color: #f1f1f1 !important;
 }
 
-/* ===============================
-   H1 样式（方正小标宋）
-   =============================== */
+/* =========================================================
+   H1：方正小标宋
+   ========================================================= */
 .post-content h1 {
   font-family: 'FZXiaoBiaoSongK', serif;
   font-weight: 700;
   font-size: 2rem;
   text-align: center;
-  color: #000000;
-  margin-top: 2.2em;
-  margin-bottom: 1.2em;
+  color: #000;
+  margin: 2.2em 0 1.2em;
   line-height: 1.35;
   border: none !important;
-  padding-left: 0 !important;
 }
 
-/* 深色模式：H1 纯白 */
 html.dark .post-content h1 {
   color: #ffffff !important;
 }
 
-/* ===============================
-   H2（主标题，思源宋体 + 左侧竖线，保持红色）
-   =============================== */
+/* =========================================================
+   H2：思源宋体（主红色）
+   ========================================================= */
 .post-content h2 {
   color: #b22222;
-  font-family: 'SourceHanSerifSC', 'Noto Serif SC', serif;
+  font-family: 'SourceHanSerifSC', serif;
   font-weight: 700;
   border-left: 6px solid #b22222;
   padding-left: 0.55em;
-  margin-top: 2.1em;
-  margin-bottom: 0.9em;
-  line-height: 1.55;
+  margin: 2.1em 0 0.9em;
 }
 
 html.dark .post-content h2 {
@@ -111,49 +97,43 @@ html.dark .post-content h2 {
   border-left-color: #ff6b6b;
 }
 
-/* ===============================
-   H3（次级标题，思源宋体 + 深红；红色不改）
-   =============================== */
+/* =========================================================
+   H3：深红副标题
+   ========================================================= */
 .post-content h3 {
   color: #b22222;
   font-family: 'SourceHanSerifSC', serif;
   font-weight: 600;
-  margin-top: 1.8em;
-  margin-bottom: 0.6em;
-  line-height: 1.55;
+  margin: 1.8em 0 0.6em;
 }
 
 html.dark .post-content h3 {
   color: #ffb3b3;
 }
 
-/* ===============================
-   H4（方正黑体，黑色标题）
-   =============================== */
+/* =========================================================
+   H4：方正黑体
+   ========================================================= */
 .post-content h4 {
-  font-family: 'FZHeiTiK', 'Source Han Sans SC', sans-serif;
+  font-family: 'FZHeiTiK', sans-serif;
   font-weight: 700;
-  color: #000000;
-  margin-top: 1.7em;
-  margin-bottom: 0.55em;
-  line-height: 1.55;
+  color: #000;
+  margin: 1.7em 0 0.55em;
 }
 
-/* 深色模式：H4 纯白 */
 html.dark .post-content h4 {
   color: #ffffff !important;
 }
 
-/* ===============================
-   H5 / H6（方正书宋加粗）
-   =============================== */
+/* =========================================================
+   H5 / H6：方正书宋加粗
+   ========================================================= */
 .post-content h5,
 .post-content h6 {
   font-family: 'FZShuSongK', serif;
   font-weight: 700;
   color: #7a1a1a;
-  margin-top: 1.6em;
-  margin-bottom: 0.5em;
+  margin: 1.6em 0 0.5em;
 }
 
 html.dark .post-content h5,
@@ -161,9 +141,9 @@ html.dark .post-content h6 {
   color: #ffbaba;
 }
 
-/* ===============================
-   强调（红色保持不变）
-   =============================== */
+/* =========================================================
+   strong
+   ========================================================= */
 .post-content strong {
   color: #c1121f;
   font-weight: 700;
@@ -173,9 +153,9 @@ html.dark .post-content strong {
   color: #ff8080;
 }
 
-/* ===============================
+/* =========================================================
    列表
-   =============================== */
+   ========================================================= */
 .post-content ul,
 .post-content ol {
   padding-left: 2.2em;
@@ -184,16 +164,16 @@ html.dark .post-content strong {
 
 html.dark .post-content ul,
 html.dark .post-content ol {
-  color: #dddddd;
+  color: #e6e6e6;
 }
 
 .post-content li {
   margin: 0.45em 0;
 }
 
-/* ===============================
-   引用块（红色风格不改）
-   =============================== */
+/* =========================================================
+   blockquote
+   ========================================================= */
 .post-content blockquote {
   border-left: 5px solid #b22222;
   background: #fff7f7;
@@ -209,9 +189,9 @@ html.dark .post-content blockquote {
   color: #f0dcdc;
 }
 
-/* ===============================
+/* =========================================================
    图片
-   =============================== */
+   ========================================================= */
 .post-content img {
   display: block;
   margin: 1.6em auto;
@@ -220,9 +200,9 @@ html.dark .post-content blockquote {
   max-width: 100%;
 }
 
-/* ===============================
+/* =========================================================
    表格
-   =============================== */
+   ========================================================= */
 .post-content table {
   border-collapse: collapse;
   margin: 1.5em auto;
@@ -241,16 +221,16 @@ html.dark .post-content blockquote {
   color: #8b0000;
 }
 
-html.dark .post-content table th {
+html.dark .post-content th {
   background: #2d1d1d;
   color: #ffaaaa;
 }
 
-/* ===============================
+/* =========================================================
    代码块
-   =============================== */
+   ========================================================= */
 .post-content pre {
-  background-color: #faf4f4;
+  background: #faf4f4;
   border-left: 5px solid #c1121f;
   border-radius: 0.55rem;
   padding: 1em 1.3em;
@@ -271,9 +251,9 @@ html.dark .post-content code {
   color: #ff8888;
 }
 
-/* ===============================
-   超链接（红色保持）
-   =============================== */
+/* =========================================================
+   超链接
+   ========================================================= */
 .post-content a {
   color: #b22222;
   text-decoration: underline dotted;
@@ -284,30 +264,25 @@ html.dark .post-content a {
 }
 
 /* =========================================================
-   专题训练 / 拓展练习卡片（取消渐变，改为简约纯色）
+   专题训练卡片（简洁纯色）
    ========================================================= */
 .study-box {
   margin-top: 2.5rem;
   padding: 1.6rem 1.2rem;
   border-radius: 18px;
-
-  /* ✅ 去掉渐变，改为简洁的浅红底 */
   background: #fdf5f5;
-
   box-shadow: 0 4px 12px rgba(150, 40, 40, 0.10);
   text-align: center;
   backdrop-filter: blur(2px);
 }
 
 html.dark .study-box {
-  /* ✅ 深色模式：统一为低饱和暗红 */
   background: #2c1a1a;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.6);
 }
 
-/* 标题：思源宋体（保持） */
 .study-title {
-  font-family: 'SourceHanSerifSC', 'Noto Serif SC', serif;
+  font-family: 'SourceHanSerifSC', serif;
   font-weight: 700;
   font-size: 1.1rem;
   color: #8b0000;
@@ -325,7 +300,6 @@ html.dark .study-title {
   gap: 0.75rem;
 }
 
-/* 按钮：方正黑体 */
 .study-btn {
   font-family: 'FZHeiTiK', sans-serif;
   padding: 0.75rem 1.4rem;
