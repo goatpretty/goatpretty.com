@@ -4,15 +4,18 @@ import FriendLink from '../components/friendLink.astro';
 import '../styles/mathjax.css';
 import '../styles/global.css';
 
-// ✅ 从 Markdown frontmatter 获取 lastUpdated
+// 从 Markdown frontmatter 获取 lastUpdated
 const { lastUpdated } = Astro.props;
 ---
 
 <div class="bg-bodyLight dark:bg-bodyDark flex flex-col overflow-hidden h-screen">
   <slot name="header" />
   <main class="flex flex-1">
-    <!-- 左侧目录 -->
-    <div class="bg-bgLight dark:bg-bgDark hidden md:flex flex-auto flex-col w-3/12 pl-16">
+    <!-- 左侧目录（已加入滑动条） -->
+    <div
+      class="bg-bgLight dark:bg-bgDark hidden md:flex flex-auto flex-col w-3/12 pl-16 overflow-y-auto"
+      style="height: calc(100vh - 4rem)"
+    >
       <motion.div
         client:load
         initial={{ opacity: 0, x: -50 }}
@@ -47,7 +50,7 @@ const { lastUpdated } = Astro.props;
         <!-- 文章内容 -->
         <slot name="article" />
 
-        <!-- 🕓 最后更新时间 + 👁️ 阅读次数 -->
+        <!-- 最后更新时间 + 阅读次数（已去除 emoji） -->
         <div
           id="meta-info"
           class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-6 select-none"
@@ -73,7 +76,7 @@ const { lastUpdated } = Astro.props;
   </main>
 </div>
 
-<!-- 👇 阅读次数统计脚本 -->
+<!-- 阅读次数统计脚本 -->
 <script lang="ts">
 // @ts-nocheck
 
@@ -95,7 +98,7 @@ if (slug) {
     if (el) el.textContent = '阅读统计加载失败';
   };
 
-  // ✅ 防止 24 小时内重复计数
+  // 防止 24 小时内重复计数
   if (!lastViewTime || now - Number(lastViewTime) > 24 * 60 * 60 * 1000) {
     fetch(`/views/${slug}`)
       .then((res) => res.json())
