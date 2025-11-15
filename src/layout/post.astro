@@ -3,16 +3,26 @@ import FriendLink from '../components/friendLink.astro';
 import '../styles/mathjax.css';
 import '../styles/global.css';
 
-// 从 Markdown frontmatter 获取 lastUpdated
-const { lastUpdated } = Astro.props;
+// 从 Markdown frontmatter 读取属性
+const { frontmatter } = Astro.props;
+const { lastUpdated, customStyle } = frontmatter;
 ---
+
+<head>
+  <!-- 全局样式 -->
+  <link rel="stylesheet" href="/styles/global.css" />
+  <link rel="stylesheet" href="/styles/mathjax.css" />
+
+  <!-- ⭐ 如果文章定义了 customStyle，就动态加载对应的 CSS ⭐ -->
+  {customStyle && <link rel="stylesheet" href={customStyle} />}
+</head>
 
 <style>
 /* ================================
    左侧目录滚动条（细线、圆角、美化）
    ================================ */
 .left-toc::-webkit-scrollbar {
-  width: 4px;             /* 细线滚动条 */
+  width: 4px;
 }
 .left-toc::-webkit-scrollbar-thumb {
   background: rgba(120,120,120,0.35);
@@ -24,8 +34,6 @@ const { lastUpdated } = Astro.props;
 .left-toc::-webkit-scrollbar-track {
   background: transparent;
 }
-
-/* 暗黑模式滚动条适配 */
 html.dark .left-toc::-webkit-scrollbar-thumb {
   background: rgba(180,180,180,0.25);
 }
@@ -34,14 +42,13 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
 }
 
 /* ================================
-   纯 CSS 进场动画，替代 motion
+   纯 CSS 进场动画
    ================================ */
 .slide-in-left {
   opacity: 0;
   transform: translateX(-50px);
   animation: slide-in-left 0.4s ease-out forwards;
 }
-
 @keyframes slide-in-left {
   from {
     opacity: 0;
@@ -56,8 +63,10 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
 
 <div class="bg-bodyLight dark:bg-bodyDark flex flex-col overflow-hidden h-screen">
   <slot name="header" />
+
   <main class="flex flex-1">
-    <!-- 左侧目录（已加入细线滚动条 + CSS 动画） -->
+
+    <!-- 左侧目录 -->
     <div
       class="bg-bgLight dark:bg-bgDark hidden md:flex flex-auto flex-col w-3/12 pl-16 left-toc overflow-y-auto"
       style="height: calc(100vh - 4rem)"
@@ -65,8 +74,8 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
       <div class="slide-in-left">
         <div
           class="bg-foilLight dark:bg-foilDark flex flex-col items-center
-         mt-2 md:ml-2 md:mr-3 ml-3 mr-3 pt-2 pb-3 rounded-2xl
-         transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
+          mt-2 md:ml-2 md:mr-3 ml-3 mr-3 pt-2 pb-3 rounded-2xl
+          transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
         >
           <slot name="headings" />
         </div>
@@ -75,17 +84,18 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
       </div>
     </div>
 
-    <!-- 主体内容（仅纵向滚动 + CSS 动画） -->
+    <!-- 中间内容区域 -->
     <div
       class="flex-auto w-full md:w-8/12 ml-0.5 mr-0.5 overflow-y-auto overflow-x-hidden p-3 md:p-10 pb-16 md:pb-24"
       id="main-content"
       style="height: calc(100vh - 4rem)"
     >
+
       <div class="slide-in-left">
         <!-- 文章内容 -->
         <slot name="article" />
 
-        <!-- 最后更新时间 + 阅读次数 -->
+        <!-- 更新时间 + 阅读次数 -->
         <div
           id="meta-info"
           class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-6 select-none"
@@ -112,7 +122,7 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
 </div>
 
 <!-- 阅读次数统计脚本 -->
-<script lang="ts">
+<script>
 // @ts-nocheck
 
 const pathParts = window.location.pathname.split('/');
@@ -133,11 +143,12 @@ if (slug) {
     if (el) el.textContent = '阅读统计加载失败';
   };
 
+  // 24 小时内不重复计数
   if (!lastViewTime || now - Number(lastViewTime) > 24 * 60 * 60 * 1000) {
     fetch(`/views/${slug}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data && typeof data.views === 'number') {
+        if (typeof data?.views === 'number') {
           updateCounter(data.views);
           localStorage.setItem(lastViewKey, now.toString());
         } else showError();
@@ -147,7 +158,7 @@ if (slug) {
     fetch(`/views/${slug}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data && typeof data.views === 'number') updateCounter(data.views);
+        if (typeof data?.views === 'number') updateCounter(data.views);
         else showError();
       })
       .catch(showError);
