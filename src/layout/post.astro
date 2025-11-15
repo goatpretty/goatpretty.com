@@ -5,7 +5,12 @@ import '../styles/global.css';
 
 // 从 Markdown frontmatter 读取属性
 const { frontmatter } = Astro.props;
-const { lastUpdated, customStyle } = frontmatter;
+const publishDate = frontmatter.publishDate;
+const {
+  lastUpdated = publishDate,
+  customStyle = null
+} = frontmatter ?? {};
+
 ---
 
 <head>
