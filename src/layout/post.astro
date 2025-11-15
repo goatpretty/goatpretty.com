@@ -10,10 +10,8 @@ const { lastUpdated, customStyle } = Astro.props as {
 };
 ---
 
-<!-- 🔗 如果有 customStyle，就把它插入到 <head>，只对当前页面生效 -->
-<head>
-  {customStyle && <link rel="stylesheet" href={customStyle} />}
-</head>
+<!-- 🔗 正确注入 customStyle：必须用 set:html（放在模板最顶层） -->
+{customStyle && <link rel="stylesheet" href={customStyle} set:html />}
 
 <style>
 /* ================================
@@ -90,7 +88,6 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
       style="height: calc(100vh - 4rem)"
     >
       <div class="slide-in-left">
-        
 
         <!-- 文章内容（加上 dangshi class） -->
         <div class="post-content dangshi">
