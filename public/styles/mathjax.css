@@ -1,0 +1,55 @@
+/* =========================
+   MathJax v2 兼容样式（旧版）
+   ========================= */
+.MathJax {
+  max-width: 80vw;
+  display: block;
+  overflow-x: auto;
+  font-size: 1rem;
+  text-align: center;
+  margin: 1.2em auto;
+}
+
+/* =========================
+   MathJax v3 SVG 样式
+   ========================= */
+
+/* 块级公式（$$ ... $$） */
+mjx-container[jax="SVG"][display="true"] {
+  max-width: 80vw;
+  display: block !important;        /* ✅ 独占一行 */
+  margin: 1.2em auto !important;    /* ✅ 居中 */
+  font-size: 1rem;
+  overflow-x: auto;
+  text-align: center !important;
+}
+mjx-container[jax="SVG"][display="true"] > svg {
+  display: inline-block;            /* ✅ 内部SVG水平居中 */
+  text-align: center;
+}
+
+/* 行内公式（$ ... $） */
+mjx-container[jax="SVG"][display="false"],
+mjx-container[jax="SVG"]:not([display]) {
+  display: inline-block !important;
+  margin: 0 0.25em;
+  vertical-align: middle;
+  font-size: 1rem;
+}
+
+/* =========================
+   段落缩进 & 居中修复
+   ========================= */
+
+/* 块级公式的段落去掉缩进、强制居中 */
+.post-content p:has(mjx-container[display="true"]) {
+  text-align: center !important;
+  text-indent: 0 !important;
+  margin: 1.2em 0 !important;
+}
+
+/* 行内公式所在段落仍保留缩进（可选） */
+.post-content p:has(mjx-container[display="false"]),
+.post-content p:has(mjx-container:not([display])) {
+  text-indent: 2em;
+}
