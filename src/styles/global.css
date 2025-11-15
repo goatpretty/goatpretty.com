@@ -315,3 +315,83 @@ code {
 .post-content h6 {
   line-height: 1.4;
 }
+
+/* ============================================
+   📘 学习巩固/拓展卡片（Study Box）
+   ============================================ */
+.study-box {
+  margin-top: 2.5rem;
+  padding: 1.6rem 1.2rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fafafa 0%, #e8e8e8 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.7),
+    0 4px 10px rgba(0,0,0,0.08);
+  text-align: center;
+  transition: all 0.25s ease;
+}
+
+html.dark .study-box {
+  background: linear-gradient(135deg, #2a2a2a, #1c1c1c);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.1),
+    0 4px 10px rgba(0,0,0,0.4);
+}
+
+.study-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 1.1rem;
+  color: #333;
+}
+
+html.dark .study-title {
+  color: #ddd;
+}
+
+/* ============================================
+   📘 按钮容器（自适应换行 + 居中）
+   ============================================ */
+.study-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+/* ============================================
+   📘 学习按钮样式
+   ============================================ */
+.study-btn {
+  padding: 0.8rem 1.6rem;
+  background: #ffffff;
+  color: #222;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+  transition: all 0.22s ease;
+  display: inline-block;
+  min-width: 115px; /* 防止文字换行挤压 */
+  text-align: center;
+}
+
+.study-btn:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+}
+
+/* 暗色按钮模式 */
+html.dark .study-btn {
+  background: #2d2d2d;
+  color: #eaeaea;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+}
+
+html.dark .study-btn:hover {
+  background: #3a3a3a;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.55);
+  transform: translateY(-2px);
+}
