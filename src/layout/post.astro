@@ -3,21 +3,15 @@ import FriendLink from '../components/friendLink.astro';
 import '../styles/mathjax.css';
 import '../styles/global.css';
 
-// 从 Markdown frontmatter 读取属性
-const frontmatter = Astro.props.frontmatter ?? {};
-const publishDate = frontmatter.publishDate ?? null;
-const lastUpdated = frontmatter.lastUpdated ?? publishDate;
-const customStyle = frontmatter.customStyle ?? null;
-
-
+// 从 Markdown frontmatter 直接解构 props（通过 posts/[id].astro 传入）
+const { lastUpdated, customStyle } = Astro.props as {
+  lastUpdated?: string;
+  customStyle?: string;
+};
 ---
 
+<!-- 🔗 如果有 customStyle，就把它插入到 <head>，只对当前页面生效 -->
 <head>
-  <!-- 全局样式 -->
-  <link rel="stylesheet" href="/styles/global.css" />
-  <link rel="stylesheet" href="/styles/mathjax.css" />
-
-  <!-- ⭐ 如果文章定义了 customStyle，就动态加载对应的 CSS ⭐ -->
   {customStyle && <link rel="stylesheet" href={customStyle} />}
 </head>
 
@@ -38,6 +32,8 @@ const customStyle = frontmatter.customStyle ?? null;
 .left-toc::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* 暗黑模式滚动条适配 */
 html.dark .left-toc::-webkit-scrollbar-thumb {
   background: rgba(180,180,180,0.25);
 }
@@ -46,13 +42,14 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
 }
 
 /* ================================
-   纯 CSS 进场动画
+   纯 CSS 进场动画（替代 motion）
    ================================ */
 .slide-in-left {
   opacity: 0;
   transform: translateX(-50px);
   animation: slide-in-left 0.4s ease-out forwards;
 }
+
 @keyframes slide-in-left {
   from {
     opacity: 0;
@@ -65,14 +62,10 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
 }
 </style>
 
-{customStyle ? <link rel="stylesheet" href={customStyle} /> : null}
-
 <div class="bg-bodyLight dark:bg-bodyDark flex flex-col overflow-hidden h-screen">
   <slot name="header" />
-
   <main class="flex flex-1">
-
-    <!-- 左侧目录 -->
+    <!-- 左侧目录（细线滚动条 + CSS 动画） -->
     <div
       class="bg-bgLight dark:bg-bgDark hidden md:flex flex-auto flex-col w-3/12 pl-16 left-toc overflow-y-auto"
       style="height: calc(100vh - 4rem)"
@@ -90,18 +83,17 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
       </div>
     </div>
 
-    <!-- 中间内容区域 -->
+    <!-- 主体内容（只纵向滚动，去掉横向滚动条） -->
     <div
       class="flex-auto w-full md:w-8/12 ml-0.5 mr-0.5 overflow-y-auto overflow-x-hidden p-3 md:p-10 pb-16 md:pb-24"
       id="main-content"
       style="height: calc(100vh - 4rem)"
     >
-
       <div class="slide-in-left">
         <!-- 文章内容 -->
         <slot name="article" />
 
-        <!-- 更新时间 + 阅读次数 -->
+        <!-- 最后更新时间 + 阅读次数 -->
         <div
           id="meta-info"
           class="text-right text-sm text-fontLight dark:text-fontDark opacity-70 mt-6 select-none"
@@ -128,7 +120,7 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
 </div>
 
 <!-- 阅读次数统计脚本 -->
-<script>
+<script lang="ts">
 // @ts-nocheck
 
 const pathParts = window.location.pathname.split('/');
@@ -149,22 +141,23 @@ if (slug) {
     if (el) el.textContent = '阅读统计加载失败';
   };
 
-  // 24 小时内不重复计数
+  // 24 小时内防重复计数
   if (!lastViewTime || now - Number(lastViewTime) > 24 * 60 * 60 * 1000) {
     fetch(`/views/${slug}`)
       .then((res) => res.json())
       .then((data) => {
-        if (typeof data?.views === 'number') {
+        if (data && typeof data.views === 'number') {
           updateCounter(data.views);
           localStorage.setItem(lastViewKey, now.toString());
         } else showError();
       })
       .catch(showError);
   } else {
+    // 已访问，仅刷新显示
     fetch(`/views/${slug}`)
       .then((res) => res.json())
       .then((data) => {
-        if (typeof data?.views === 'number') updateCounter(data.views);
+        if (data && typeof data.views === 'number') updateCounter(data.views);
         else showError();
       })
       .catch(showError);

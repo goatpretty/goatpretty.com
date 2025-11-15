@@ -28,7 +28,7 @@ const { Content, headings } = await render(entry);
   </head>
 
   <body>
-    <Post>
+    <Post {...entry.data}>
       <Navigation slot="header" />
 
       <!-- ✅ 正文外层加 post-content，保证缩进 CSS 命中 -->
