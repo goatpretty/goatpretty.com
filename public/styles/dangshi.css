@@ -1,5 +1,5 @@
 /* =========================================================
-   专属样式：党史随笔（dangshi-suibi）
+   专属样式：党史随笔（dangshi-suibi）【加强版】
    ========================================================= */
 
 /* ===============================
@@ -34,165 +34,159 @@
 }
 
 /* =========================================================
-   正文基础
+   正文基础（提高优先级：dangshi 作用域）
    ========================================================= */
-
-.post-content {
-  font-family: 'FZShuSongK', 'Noto Serif SC', 'SimSun', serif;
+.post-content.dangshi {
+  font-family: 'FZShuSongK', 'Noto Serif SC', 'SimSun', serif !important;
   font-size: 1.08rem;
   line-height: 2.05;
-  color: #2a2a2a;
+  color: #2a2a2a !important;
   letter-spacing: 0.28px;
 }
 
-html.dark .post-content {
+html.dark .post-content.dangshi {
   color: #f5f5f5 !important;
 }
 
 /* ===============================
    段落
    =============================== */
-.post-content p {
+.post-content.dangshi p {
   text-indent: 2em;
-  color: #2b1a1a;
+  color: #2b1a1a !important;
   margin: 0 0 1.25em;
 }
 
-html.dark .post-content p {
+html.dark .post-content.dangshi p {
   color: #f1f1f1 !important;
 }
 
 /* =========================================================
    H1：方正小标宋
    ========================================================= */
-.post-content h1 {
-  font-family: 'FZXiaoBiaoSongK', serif;
+.post-content.dangshi h1 {
+  font-family: 'FZXiaoBiaoSongK', serif !important;
   font-weight: 700;
   font-size: 2rem;
   text-align: center;
-  color: #000;
+  color: #000 !important;
   margin: 2.2em 0 1.2em;
   line-height: 1.35;
-  border: none !important;
 }
 
-html.dark .post-content h1 {
+html.dark .post-content.dangshi h1 {
   color: #ffffff !important;
 }
 
 /* =========================================================
    H2：思源宋体（主红色）
    ========================================================= */
-.post-content h2 {
-  color: #b22222;
-  font-family: 'SourceHanSerifSC', serif;
+.post-content.dangshi h2 {
+  color: #b22222 !important;
+  font-family: 'SourceHanSerifSC', serif !important;
   font-weight: 700;
   border-left: 6px solid #b22222;
   padding-left: 0.55em;
   margin: 2.1em 0 0.9em;
 }
 
-html.dark .post-content h2 {
-  color: #ffcccc;
+html.dark .post-content.dangshi h2 {
+  color: #ffcccc !important;
   border-left-color: #ff6b6b;
 }
 
 /* =========================================================
    H3：深红副标题
    ========================================================= */
-.post-content h3 {
-  color: #b22222;
-  font-family: 'SourceHanSerifSC', serif;
+.post-content.dangshi h3 {
+  color: #b22222 !important;
+  font-family: 'SourceHanSerifSC', serif !important;
   font-weight: 600;
   margin: 1.8em 0 0.6em;
 }
 
-html.dark .post-content h3 {
-  color: #ffb3b3;
+html.dark .post-content.dangshi h3 {
+  color: #ffb3b3 !important;
 }
 
 /* =========================================================
    H4：方正黑体
    ========================================================= */
-.post-content h4 {
-  font-family: 'FZHeiTiK', sans-serif;
+.post-content.dangshi h4 {
+  font-family: 'FZHeiTiK', sans-serif !important;
   font-weight: 700;
-  color: #000;
+  color: #000 !important;
   margin: 1.7em 0 0.55em;
 }
 
-html.dark .post-content h4 {
+html.dark .post-content.dangshi h4 {
   color: #ffffff !important;
 }
 
 /* =========================================================
    H5 / H6：方正书宋加粗
    ========================================================= */
-.post-content h5,
-.post-content h6 {
-  font-family: 'FZShuSongK', serif;
+.post-content.dangshi h5,
+.post-content.dangshi h6 {
+  font-family: 'FZShuSongK', serif !important;
   font-weight: 700;
-  color: #7a1a1a;
+  color: #7a1a1a !important;
   margin: 1.6em 0 0.5em;
 }
 
-html.dark .post-content h5,
-html.dark .post-content h6 {
-  color: #ffbaba;
+html.dark .post-content.dangshi h5,
+html.dark .post-content.dangshi h6 {
+  color: #ffbaba !important;
 }
 
 /* =========================================================
    strong
    ========================================================= */
-.post-content strong {
-  color: #c1121f;
+.post-content.dangshi strong {
+  color: #c1121f !important;
   font-weight: 700;
 }
 
-html.dark .post-content strong {
-  color: #ff8080;
+html.dark .post-content.dangshi strong {
+  color: #ff8080 !important;
 }
 
 /* =========================================================
    列表
    ========================================================= */
-.post-content ul,
-.post-content ol {
+.post-content.dangshi ul,
+.post-content.dangshi ol {
   padding-left: 2.2em;
-  color: #3a1e1e;
+  color: #3a1e1e !important;
 }
 
-html.dark .post-content ul,
-html.dark .post-content ol {
-  color: #e6e6e6;
-}
-
-.post-content li {
-  margin: 0.45em 0;
+html.dark .post-content.dangshi ul,
+html.dark .post-content.dangshi ol {
+  color: #e6e6e6 !important;
 }
 
 /* =========================================================
    blockquote
    ========================================================= */
-.post-content blockquote {
+.post-content.dangshi blockquote {
   border-left: 5px solid #b22222;
   background: #fff7f7;
   padding: 0.9em 1.25em;
-  color: #4a1e1e;
+  color: #4a1e1e !important;
   border-radius: 6px;
   margin: 1.5em 0;
 }
 
-html.dark .post-content blockquote {
+html.dark .post-content.dangshi blockquote {
   background: #2a1a1a;
   border-left-color: #ff6b6b;
-  color: #f0dcdc;
+  color: #f0dcdc !important;
 }
 
 /* =========================================================
    图片
    ========================================================= */
-.post-content img {
+.post-content.dangshi img {
   display: block;
   margin: 1.6em auto;
   border-radius: 0.6rem;
@@ -203,33 +197,33 @@ html.dark .post-content blockquote {
 /* =========================================================
    表格
    ========================================================= */
-.post-content table {
+.post-content.dangshi table {
   border-collapse: collapse;
   margin: 1.5em auto;
   width: 96%;
   font-size: 0.97rem;
 }
 
-.post-content td,
-.post-content th {
-  border: 1px solid #d99;
+.post-content.dangshi td,
+.post-content.dangshi th {
+  border: 1px solid #d99 !important;
   padding: 0.5em 0.85em;
 }
 
-.post-content th {
+.post-content.dangshi th {
   background: #fff5f5;
-  color: #8b0000;
+  color: #8b0000 !important;
 }
 
-html.dark .post-content th {
+html.dark .post-content.dangshi th {
   background: #2d1d1d;
-  color: #ffaaaa;
+  color: #ffaaaa !important;
 }
 
 /* =========================================================
    代码块
    ========================================================= */
-.post-content pre {
+.post-content.dangshi pre {
   background: #faf4f4;
   border-left: 5px solid #c1121f;
   border-radius: 0.55rem;
@@ -237,30 +231,30 @@ html.dark .post-content th {
   overflow-x: auto;
 }
 
-.post-content code {
-  font-family: "Maple Mono NF CN", Consolas, monospace;
-  color: #a22;
-}
-
-html.dark .post-content pre {
+html.dark .post-content.dangshi pre {
   background: #2b1d1d;
   border-left-color: #ff6b6b;
 }
 
-html.dark .post-content code {
-  color: #ff8888;
+.post-content.dangshi code {
+  font-family: "Maple Mono NF CN", Consolas, monospace !important;
+  color: #a22 !important;
+}
+
+html.dark .post-content.dangshi code {
+  color: #ff8888 !important;
 }
 
 /* =========================================================
    超链接
    ========================================================= */
-.post-content a {
-  color: #b22222;
+.post-content.dangshi a {
+  color: #b22222 !important;
   text-decoration: underline dotted;
 }
 
-html.dark .post-content a {
-  color: #ffa4a4;
+html.dark .post-content.dangshi a {
+  color: #ffa4a4 !important;
 }
 
 /* =========================================================
@@ -277,19 +271,19 @@ html.dark .post-content a {
 }
 
 html.dark .study-box {
-  background: #2c1a1a;
+  background: #2c1a1a !important;
   box-shadow: 0 4px 14px rgba(0,0,0,0.6);
 }
 
 .study-title {
-  font-family: 'SourceHanSerifSC', serif;
+  font-family: 'SourceHanSerifSC', serif !important;
   font-weight: 700;
   font-size: 1.1rem;
   color: #8b0000;
 }
 
 html.dark .study-title {
-  color: #ffcccc;
+  color: #ffcccc !important;
 }
 
 .study-actions {
@@ -301,7 +295,7 @@ html.dark .study-title {
 }
 
 .study-btn {
-  font-family: 'FZHeiTiK', sans-serif;
+  font-family: 'FZHeiTiK', sans-serif !important;
   padding: 0.75rem 1.4rem;
   background: #fffafa;
   border-radius: 12px;
@@ -321,7 +315,6 @@ html.dark .study-title {
 html.dark .study-btn {
   background: #4a2222;
   color: #ffc9c9;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.55);
 }
 
 html.dark .study-btn:hover {

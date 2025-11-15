@@ -3,24 +3,26 @@ import "../styles/global.css";
 
 const { frontmatter, Content } = Astro.props;
 ---
-
 <html lang="zh-cn">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{frontmatter.title}</title>
 
-    <!-- 全局样式 -->
-    <link rel="stylesheet" href="/styles/global.css" />
+    <!-- ✅ 全局样式 -->
+    <link rel="stylesheet" href="../styles/global.css" />
 
-    <!-- 党史随笔 / 自定义样式：放在 global.css 之后，使其能够覆盖 -->
+    <!-- ✅ 党史随笔专属样式（必须放在 head 才能生效） -->
+    <link rel="stylesheet" href="/styles/dangshi.css" />
+
+    <!-- ✅ 如果 frontmatter 指定了 customStyle，就单独加载 -->
     {frontmatter.customStyle && (
       <link rel="stylesheet" href={frontmatter.customStyle} />
     )}
 
-    <!-- SEO -->
+    <!-- ✅ SEO -->
     {frontmatter.description && (
-     <meta name="description" content={frontmatter.description} />
+      <meta name="description" content={frontmatter.description} />
     )}
   </head>
 
@@ -40,8 +42,8 @@ const { frontmatter, Content } = Astro.props;
         <p class="post-description">{frontmatter.description}</p>
       )}
 
-      <!-- 文章内容（党史随笔自动加 .dangshi class） -->
-      <div class={`post-content ${frontmatter.customStyle ? 'dangshi' : ''}`}>
+      <!-- ✅ 在这里自动启用党史随笔样式 -->
+      <div class="post-content dangshi">
         <Content />
       </div>
 
@@ -121,7 +123,7 @@ const { frontmatter, Content } = Astro.props;
   font-size: 0.9rem;
   text-align: center;
   margin: 0 0 1.5rem;
-  text-indent: 0;
+  text-indent: 0; /* 不缩进 */
 }
 
 /* 简介文字 */
@@ -130,13 +132,13 @@ const { frontmatter, Content } = Astro.props;
   text-align: center;
   color: #555;
   margin: 0 0 2rem;
-  text-indent: 0;
+  text-indent: 0; /* 不缩进 */
 }
 
-/* 默认正文基础样式（不会覆盖 dangshi.css） */
+/* 正文样式基础 */
 .post-content {
   font-size: 1rem;
   line-height: 1.8;
-  color: inherit; /* ⚠ 完全继承，不强制颜色 */
+  color: #222;
 }
 </style>
