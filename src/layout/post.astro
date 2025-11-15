@@ -4,12 +4,11 @@ import '../styles/mathjax.css';
 import '../styles/global.css';
 
 // 从 Markdown frontmatter 读取属性
-const { frontmatter } = Astro.props;
-const publishDate = frontmatter.publishDate;
-const {
-  lastUpdated = publishDate,
-  customStyle = null
-} = frontmatter ?? {};
+const frontmatter = Astro.props.frontmatter ?? {};
+const publishDate = frontmatter.publishDate ?? null;
+const lastUpdated = frontmatter.lastUpdated ?? publishDate;
+const customStyle = frontmatter.customStyle ?? null;
+
 
 ---
 
