@@ -65,6 +65,8 @@ html.dark .left-toc::-webkit-scrollbar-thumb:hover {
 }
 </style>
 
+{customStyle ? <link rel="stylesheet" href={customStyle} /> : null}
+
 <div class="bg-bodyLight dark:bg-bodyDark flex flex-col overflow-hidden h-screen">
   <slot name="header" />
 
